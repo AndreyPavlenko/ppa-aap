@@ -1,0 +1,13 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@ --parallel --with autoreconf
+
+override_dh_strip:
+	dh_strip --dbg-package=i965-va-driver-dbg
+
+override_dh_installchangelogs:
+	dh_installchangelogs NEWS
+
+override_dh_auto_build:
+	dh_auto_build -- V=1

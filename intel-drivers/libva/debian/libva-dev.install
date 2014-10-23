@@ -1,0 +1,3 @@
+usr/include
+usr/lib/*/libva*.so
+usr/lib/*/pkgconfig

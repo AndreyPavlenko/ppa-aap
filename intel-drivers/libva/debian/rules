@@ -1,0 +1,23 @@
+#!/usr/bin/make -f
+
+DEB_HOST_ARCH_OS = $(shell dpkg-architecture -qDEB_HOST_ARCH_OS)
+
+confflags = --disable-silent-rules
+ifeq (,$(findstring linux,$(DEB_HOST_ARCH_OS)))
+# wayland is only available on linux-any
+confflags += --disable-wayland
+endif
+
+%:
+	dh $@ --parallel --with autoreconf
+
+override_dh_makeshlibs:
+	dh_makeshlibs -Nlibva1 -Nlibva-x11-1
+	dh_makeshlibs -plibva-x11-1 -V 'libva-x11-1 (>> 1.3.0~)'
+	dh_makeshlibs -plibva1      -V 'libva1 (>> 1.3.0~)'
+
+override_dh_auto_configure:
+	dh_auto_configure -- $(confflags)
+
+override_dh_installchangelogs:
+	dh_installchangelogs NEWS

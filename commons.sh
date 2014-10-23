@@ -30,6 +30,11 @@ _changelog() {
     _git_changelog "${cur_version##*~}" "$REV"
 }
 
+_checkout() {
+    local dest="$1"
+    _git_checkout "$dest" "$REV" "$SRC_DIR" "$RELATIVE_SRC_DIR"
+}
+
 _bs_ci_count() {
     local path="${1:-"$RELPATH"}"
     git --git-dir="$PPA_ROOT_DIR/.git" log --format='%H' -- "$path" | wc -l

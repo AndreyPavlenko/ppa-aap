@@ -1,0 +1,50 @@
+#!/usr/bin/make -f
+
+VERSION := $(shell awk -F '[= ]' '/VERSION = / {print $$4}' Makefile)
+DEST_DIR := $(CURDIR)/debian/tmp
+DEST_SRC_DIR := $(DEST_DIR)/usr/src/ffdecsawrapper-$(VERSION)
+
+%:
+	dh $@ 
+
+override_dh_auto_clean:
+	
+override_dh_auto_configure:
+	
+override_dh_auto_build:
+	echo 'RELEASE=1' > config.mak
+	echo 'FFDECSA_OPTS = "FLAGS=-O3 -fexpensive-optimizations -funroll-loops -mmmx -msse -msse2 -march=native" PARALLEL_MODE=PARALLEL_128_SSE COMPILER=g++' >> config.mak
+	echo 'CXX=g++' >> config.mak
+	$(MAKE)
+	
+override_dh_installdocs:
+	
+override_dh_installchangelogs:
+	
+override_dh_auto_install:
+	mkdir -p "$(DEST_SRC_DIR)"
+	mkdir -p "$(DEST_DIR)/etc/ffdecsawrapper"
+	tar -cjf "$(DEST_SRC_DIR)/ffdecsawrapper-$(VERSION).tar.bz2" dvbloopback/ *.patch
+	cp -rv "$(CURDIR)/debian/configs"/* "$(DEST_DIR)"
+	sed 's/@VERSION@/$(VERSION)/g' < debian/dkms/dkms.conf > "$(DEST_SRC_DIR)/dkms.conf"
+	sed 's/@VERSION@/$(VERSION)/g' < debian/dkms/Makefile > "$(DEST_SRC_DIR)/Makefile"
+	sed -e 's/^[^;#]/# \0/' \
+	    < "$(CURDIR)/examples/cardclient.conf.example" \
+	    > "$(DEST_DIR)/etc/ffdecsawrapper/cardclient.conf"
+	sed -e 's/^[^;#]/; \0/' \
+	    < "$(CURDIR)/examples/cardslot.conf.example" \
+	    > "$(DEST_DIR)/etc/ffdecsawrapper/cardslot.conf"
+	sed -e 's/^[^;#]/; \0/' \
+	    < "$(CURDIR)/examples/override.conf.example" \
+	    > "$(DEST_DIR)/etc/ffdecsawrapper/override.conf"
+	sed -e 's/^[^;#]/; \0/' \
+	    < "$(CURDIR)/examples/SoftCam.Key" \
+	    > "$(DEST_DIR)/etc/ffdecsawrapper/SoftCam.Key"
+	sed -e 's/^[^;#]/; \0/' \
+	    < "$(CURDIR)/examples/smartcard.conf.example" \
+	    > "$(DEST_DIR)/etc/ffdecsawrapper/smartcard.conf"
+
+override_dh_installdeb:
+	sed -i 's/@VERSION@/$(VERSION)/g' "debian/postinst"
+	sed -i 's/@VERSION@/$(VERSION)/g' "debian/prerm"
+	dh_installdeb

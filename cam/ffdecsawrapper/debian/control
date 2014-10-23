@@ -1,0 +1,13 @@
+Source: ffdecsawrapper
+Section: video
+Priority: extra
+Maintainer: #MAINTAINER#
+Build-Depends: debhelper (>= 8.0.0), libv4l-dev, libssl-dev, gettext
+Standards-Version: 3.9.3
+Homepage: https://github.com/bas-t/ffdecsawrapper.git
+
+Package: ffdecsawrapper
+Architecture: any
+Depends: dpkg, dkms, awk, curl, build-essential, ${shlibs:Depends}
+Description: DVB Loopback adapter with FFdecsa decryption.
+ DVB Loopback adapter with FFdecsa decryption.

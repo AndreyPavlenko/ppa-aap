@@ -1,0 +1,43 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@ 
+
+DISTRIB_VERSION := $(shell lsb_release -sr)
+ARCH := $(shell dpkg-architecture -qDEB_BUILD_ARCH)
+
+ifeq ($(ARCH),amd64)
+# The x64 version is broken
+#    FILENAME := wicardd-x64
+    FILENAME := wicardd-i386
+else
+    ifeq ($(ARCH),i386)
+        FILENAME := wicardd-i386
+    else
+		echo "Unsupported architecture: $(ARCH)" 1>&2
+		exit 1
+    endif
+endif
+
+WICARD_URL := $(shell echo '@WICARD_URL_PATTERN@' | sed 's/@FILENAME@/$(FILENAME)/; s/&/\\\&/g')
+ALT_WICARD_URL := $(shell echo '@ALT_WICARD_URL_PATTERN@' | sed 's/@FILENAME@/$(FILENAME)/; s/&/\\\&/g')
+DEST := $(CURDIR)/debian/wicard-installer
+
+override_dh_install:
+	cp -r "$(CURDIR)/etc" "$(DEST)"
+	
+ifeq ($(shell dpkg --compare-versions '$(DISTRIB_VERSION)' lt '14.10'; echo $$?),0)
+	rm -rf "$(DEST)/etc/systemd"
+else
+	rm -rf "$(DEST)/etc/init"
+endif
+
+override_dh_installdeb:
+	dh_installdeb
+	sed -i 's;@WICARD_URL@;$(WICARD_URL);g' "$(DEST)/DEBIAN/preinst"
+	sed -i 's;@WICARD_URL@;$(WICARD_URL);g' "$(DEST)/DEBIAN/postinst"
+	sed -i 's;@ALT_WICARD_URL@;$(ALT_WICARD_URL);g' "$(DEST)/DEBIAN/postinst"
+
+override_dh_installdocs:
+
+override_dh_installchangelogs:

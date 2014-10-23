@@ -1,0 +1,56 @@
+#!/usr/bin/make -f
+
+DIR := $(CURDIR)
+DESTDIR := $(DIR)/debian/tmp
+NPROC := $(shell getconf _NPROCESSORS_ONLN)
+MAKE_ARGS := CONF_DIR=/etc/oscam OSCAM_BIN=$(DESTDIR)/oscam
+DISTRIB_VERSION := $(shell lsb_release -sr)
+
+%:
+	dh $@ 
+
+override_dh_auto_build:
+	
+override_dh_auto_install:
+	# Build oscam
+	mkdir -p "$(DESTDIR)/default"
+	dh_auto_build -- -j$(NPROJ) $(MAKE_ARGS) USE_PCSC=1 USE_LIBUSB=1
+	mv "$(DESTDIR)/oscam" "$(DESTDIR)/default"
+
+	# Build oscam-newcamd
+	make clean
+	./config.sh -D all -E MODULE_NEWCAMD HAVE_DVBAPI
+	mkdir -p "$(DESTDIR)/newcamd"
+	dh_auto_build -- -j$(NPROJ) $(MAKE_ARGS)
+	mv "$(DESTDIR)/oscam" "$(DESTDIR)/newcamd"
+	
+	# Install configs
+	cp -rv "$(DIR)/debian/configs"/* "$(DESTDIR)"
+	
+ifeq ($(shell dpkg --compare-versions '$(DISTRIB_VERSION)' lt '14.10'; echo $$?),0)
+	rm -rf "$(DESTDIR)/etc/systemd"
+else
+	rm -rf "$(DESTDIR)/etc/init"
+endif
+	
+	# Install examples
+	mkdir -p "$(DESTDIR)/usr/share/doc/oscam"
+	cp -r "$(DIR)/Distribution/doc/example" "$(DESTDIR)/usr/share/doc/oscam"
+	
+	# Install man
+	mkdir -p "$(DESTDIR)/usr/share/man/man1"
+	cp "$(DIR)/Distribution/doc/man"/*.1 "$(DESTDIR)/usr/share/man/man1"
+	gzip "$(DESTDIR)/usr/share/man/man1"/*.1
+	mkdir -p "$(DESTDIR)/usr/share/man/man5"
+	cp "$(DIR)/Distribution/doc/man"/*.5 "$(DESTDIR)/usr/share/man/man5"
+	gzip "$(DESTDIR)/usr/share/man/man5"/*.5
+	
+override_dh_installinit:
+	dh_installinit
+	[ ! -f "$(CURDIR)/debian/oscam-newcamd/etc/init.d/oscam-newcamd" ] || \
+	mv "$(CURDIR)/debian/oscam-newcamd/etc/init.d/oscam-newcamd" \
+	   "$(CURDIR)/debian/oscam-newcamd/etc/init.d/oscam"
+
+override_dh_installdocs:
+
+override_dh_installchangelogs:

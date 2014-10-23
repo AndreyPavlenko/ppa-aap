@@ -1,0 +1,40 @@
+#! /bin/sh
+set -e
+
+USER='ffdecsawrapper'
+GROUP='ffdecsawrapper'
+VERSION='@VERSION@'
+
+create_user() {
+    addgroup --quiet --system $GROUP > /dev/null 2>&1 || true
+    adduser --system --home /etc/ffdecsawrapper --shell /bin/false \
+            --gecos "FFdescaWrapper user" --no-create-home \
+            --disabled-login --disabled-password \
+            --ingroup $GROUP $USER > /dev/null 2>&1 || true
+    adduser $USER video > /dev/null 2>&1 || true
+    chown $USER:$GROUP -R /etc/ffdecsawrapper
+}
+
+dkms_install() {
+    if [ -z "$(dkms status -m ffdecsawrapper -v $VERSION)" ]
+    then
+        dkms add --force -m ffdecsawrapper -v $VERSION
+        dkms build --force -m ffdecsawrapper -v $VERSION
+        dkms install --force -m ffdecsawrapper -v $VERSION
+    fi
+}
+
+case "$1" in
+    configure)
+        create_user
+        dkms_install
+    ;;
+
+    abort-upgrade|abort-remove|abort-deconfigure)
+    ;;
+
+    *)
+        echo "postinst called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac

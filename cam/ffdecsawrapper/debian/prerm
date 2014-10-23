@@ -1,0 +1,23 @@
+#!/bin/sh
+
+USER='ffdecsawrapper'
+GROUP='ffdecsawrapper'
+VERSION='@VERSION@'
+
+case "$1" in
+    remove)
+        stop ffdecsawrapper > /dev/null 2>&1 || true
+        dkms remove -m ffdecsawrapper -v $VERSION --all > /dev/null 2>&1 || true
+        userdel -f $USER  > /dev/null 2>&1 || true
+        groupdel   $GROUP > /dev/null 2>&1 || true
+        rm -rf /var/log/upstart/ffdecsawrapper* > /dev/null 2>&1 || true
+    ;;
+    upgrade)
+        new_version="$2"
+        
+        if [ "${new_version%%-*}" != "$VERSION" ]
+        then
+            dkms remove -m ffdecsawrapper -v $VERSION --all > /dev/null 2>&1 || true
+        fi
+    ;;
+esac

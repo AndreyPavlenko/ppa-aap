@@ -1,0 +1,21 @@
+Template: wicard-installer/confirm
+Type: boolean
+Default: true
+Description: Do you agree to download and install this software?
+ The wicard emulator binary will be downloaded from ${WICARD_URL}
+
+Template: wicard-installer/download_invalid
+Type: String
+Default:
+Description: Enter an alternate location:
+ The file downloaded from ${WICARD_URL} is not recognized as wicard binary. 
+ Please enter an alternate location (either file path or URL) or leave this 
+ field empty to exit setup.
+
+Template: wicard-installer/download_failed
+Type: String
+Default:
+Description: Enter an alternate location:
+ Failed to download wicard binary from ${WICARD_URL}. Please enter an alternate
+ location (either file path or URL) or leave this 
+ field empty to exit setup.

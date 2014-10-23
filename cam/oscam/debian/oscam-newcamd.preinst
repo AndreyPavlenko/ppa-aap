@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ -e "/etc/init.d/oscam" ]
+then
+    # Remove obsolete SysV links
+    /etc/init.d/oscam stop > /dev/null 2>&1 || true
+    update-rc.d -f oscam remove > /dev/null 2>&1 || true
+fi

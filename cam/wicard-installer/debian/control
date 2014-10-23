@@ -1,0 +1,13 @@
+Source: wicard-installer
+Section: video
+Priority: extra
+Maintainer: #MAINTAINER#
+Build-Depends: debhelper (>= 7.0.50~), dpkg-dev, curl, sed, lsb-release
+Standards-Version: 3.9.3
+Homepage: http://wicard.tv
+
+Package: wicard-installer
+Architecture: any
+Depends: coreutils, curl, debconf, file, grep
+Description: Wicard installer
+ This package provides installation script for the wicard emulator.

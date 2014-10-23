@@ -1,0 +1,24 @@
+Source: oscam
+Section: video
+Priority: extra
+Maintainer: #MAINTAINER#
+Build-Depends: debhelper (>= 8.0.0), libpcsclite-dev, libusb-1.0-0-dev,
+ lsb-release
+Standards-Version: 3.9.3
+Homepage: http://www.streamboard.tv/svn/oscam/
+Vcs-Git: http://www.streamboard.tv/svn/oscam/trunk
+Vcs-Browser: http://www.streamboard.tv/svn/oscam/
+
+Package: oscam
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: OSCam: Open Source Conditional Access Module
+ The OSCam software is an open source multi-protocol/multi-platform SC server.
+
+Package: oscam-newcamd
+Architecture: any
+Depends: ${shlibs:Depends}
+Conflicts: oscam
+Description: OSCam: Open Source Conditional Access Module
+ The OSCam software is an open source multi-protocol/multi-platform SC server.
+ This package contains oscam that supports only one protocol - newcamd.

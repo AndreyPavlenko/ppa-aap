@@ -1,0 +1,21 @@
+[reader]
+label                         = ntv+
+protocol                      = newcamd
+device                        = <host>,<port>
+key                           = 0102030405060708091011121314
+user                          = <user>
+password                      = <password>
+inactivitytimeout             = 20
+reconnecttimeout              = 10
+group                         = 1
+
+[reader]
+label                         = tricolor
+protocol                      = newcamd
+device                        = <host>,<port>
+key                           = 0102030405060708091011121314
+user                          = <user>
+password                      = <password>
+inactivitytimeout             = 20
+reconnecttimeout              = 10
+group                         = 1

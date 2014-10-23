@@ -1,0 +1,13 @@
+diff --git a/sc/PLUGINS/src/systems/constcw/constcw.c b/sc/PLUGINS/src/systems/constcw/constcw.c
+index db33b62..3e86d5c 100644
+--- a/sc/PLUGINS/src/systems/constcw/constcw.c
++++ b/sc/PLUGINS/src/systems/constcw/constcw.c
+@@ -70,7 +70,7 @@ bool cPlainKeyConstCw::CmpExtId(cPlainKey *k)
+ 
+ bool cPlainKeyConstCw::Matches(const cEcmInfo *ecm)
+ {
+-  return ecm->prgId==prgId && ecm->source==source && ecm->transponder==transponder;
++  return ecm->prgId==prgId;
+ }
+ 
+ bool cPlainKeyConstCw::Parse(const char *line)

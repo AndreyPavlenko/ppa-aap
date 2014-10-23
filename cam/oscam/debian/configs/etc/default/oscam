@@ -1,0 +1,18 @@
+# Set debug level mask used for logging:
+# 0 - No extra debugging (default).
+# 1 - Detailed error messages.
+# 2 - ATR parsing info, ECM, EMM and CW dumps.
+# 4 - Traffic from/to the reader.
+# 8 - Traffic from/to the clients.
+# 16 - Traffic to the reader-device on IFD layer.
+# 32 - Traffic to the reader-device on I/O layer.
+# 64 - EMM logging.
+# 128 - DVBAPI logging.
+# 256 - Loadbalancer logging.
+# 512 - CACHEEX logging.
+# 1024 - Client ECM logging.
+# 65535 - Debug all.
+DEBUG_LEVEL='0'
+
+# Read configuration files from this directory.
+CONFIG_DIR='/etc/oscam'

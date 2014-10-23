@@ -1,0 +1,82 @@
+#!/bin/sh
+set -e
+
+. /usr/share/debconf/confmodule
+
+check_binary() {
+    if file -i "$1" | grep -iq binary
+    then
+        chmod 775 "$1"
+        "$1" -h 2>&1 | grep -iq wicard
+    else
+        return 1
+    fi
+}
+
+case "$1" in
+    configure)
+        url='@WICARD_URL@'
+        alt_url='@ALT_WICARD_URL@'
+        curl_opts='@CURL_OPTS@'
+        try_alt='true'
+        tmp_file="/tmp/wicard_$$.tmp"
+        
+        while true
+        do
+            status='true'
+            
+            case "$url" in
+                *:/*) echo "Downloading $url"
+                      curl $curl_opts "$url" > "$tmp_file" || status='false' ;;
+                  '') echo "Installation failed" 1>&2
+                      rm -f "$tmp_file"
+                      exit 1 ;;
+                   *) cp "$url" "$tmp_file" || status='false' ;;
+            esac
+            
+            if $status
+            then
+                if check_binary "$tmp_file"
+                then
+                    break
+                elif $try_alt
+                then
+                    url="$alt_url"
+                    try_alt='false'
+                else
+                    db_reset wicard-installer/download_invalid
+                    db_subst wicard-installer/download_invalid WICARD_URL "$url" || true
+                    db_input critical wicard-installer/download_invalid || true
+                    db_go || true
+                    db_get wicard-installer/download_invalid
+                    url="$RET"
+                fi
+            elif $try_alt
+            then
+                url="$alt_url"
+                try_alt='false'
+            else
+                db_reset wicard-installer/download_failed
+                db_subst wicard-installer/download_failed WICARD_URL "$url" || true
+                db_input critical wicard-installer/download_failed || true
+                db_go || true
+                db_get wicard-installer/download_failed
+                url="$RET"
+            fi
+        done
+        
+        echo "Installing wicard binary to /usr/bin/wicardd"
+        install -m 755 "$tmp_file" /usr/bin/wicardd
+        rm -f "$tmp_file"
+    ;;
+
+    abort-upgrade|abort-remove|abort-deconfigure)
+    ;;
+
+    *)
+        echo "postinst called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac
+
+exit 0

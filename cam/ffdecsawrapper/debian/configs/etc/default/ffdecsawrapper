@@ -1,0 +1,43 @@
+
+# Run as <username>, don't run as root.
+# USER must be member of the video group in order to get access to adapters
+# Do: usermod -a -G video <username> to add USER to the video group.
+
+USER="ffdecsawrapper"
+
+
+# Number of adapters dedicated to ffdecsawrapper
+# Maximum is 4 because max 8 adapters are permitted in your system.
+# (4 real + 4 loopback) If you need more, like me, recompile your kernel.
+# So if you have 2 adapters, you need to set "-j a:c -j b:d" in JOIN=" "
+
+NUMADAPTERS='1'
+
+
+# Number of seconds delay you need before (re)loading dvbloopback and other components.
+# On Debian 2 or 3 is fine
+
+DELAY="3"
+
+
+# Combine (some of) your real adapters with loopback adapters
+# Example: assuming you have 5 real adapters installed in your system
+# The first two of them are in use with Tvheadend or some other program
+# Number 3, 4 and 5 will be used by MythTV
+# Then you should set: -j 2:5 -j 3:6 -j 4:7
+
+JOIN='--join 0:1'
+
+
+# The directory in which you have placed the cam files needed
+# to communicate with Oscam or other cardserver
+
+CAMDIR="/etc/ffdecsawrapper"
+
+
+# Other options to pass to ffdecsawrapper
+# N.B.: One user reported that --buffer 8M works, and --buffer 16M crashes ffdecsawrapper.
+# This probably has something to do with the (lack of) 'vmalloc' settings in /etc/default/grub.
+# But I did not test it yet.
+
+OPTS="--cam-budget --sid-allpid --sid-filt 20 --buffer 16M"

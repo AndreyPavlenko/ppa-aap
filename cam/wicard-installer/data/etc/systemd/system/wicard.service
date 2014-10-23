@@ -1,0 +1,14 @@
+[Unit]
+Description=Wicard emulator
+After=network.target
+Before=vdr.service
+StopWhenUnneeded=true
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/wicardd -c /etc/wicard/wicard.conf
+RestartSec=1
+Restart=on-failure
+
+[Install]
+WantedBy=vdr.service

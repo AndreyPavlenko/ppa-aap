@@ -1,0 +1,21 @@
+#!/bin/sh
+set -e
+
+case "$1" in
+    purge|remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
+        rm -f /usr/bin/wicardd > /dev/null 2>&1 || true
+        
+        if [ "$1" = purge ] && [ -e /usr/share/debconf/confmodule ]; then
+            rm -rf /etc/wicard  > /dev/null 2>&1 || true
+	        . /usr/share/debconf/confmodule
+	        db_purge
+        fi
+    ;;
+
+    *)
+        echo "postrm called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac
+
+exit 0

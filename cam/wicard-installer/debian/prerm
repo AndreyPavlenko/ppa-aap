@@ -1,0 +1,11 @@
+#!/bin/sh
+
+case "$1" in
+    remove)
+        systemctl stop wicard > /dev/null 2>&1 || true
+        systemctl disable wicard > /dev/null 2>&1 || true
+        stop wicard > /dev/null 2>&1 || true
+        rm -rf /var/log/upstart/wicard* > /dev/null 2>&1 || true
+    ;;
+esac
+

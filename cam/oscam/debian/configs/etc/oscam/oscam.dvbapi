@@ -1,0 +1,26 @@
+#
+# dvbapi configuration
+#
+# types:
+#       P - Priority
+#               format:
+#                       P: <caid>:[<provider>]:[<srvid>]:[<ecmpid>]:[<irdeto chid>]
+#       I - Ignore
+#               format:
+#                       I: <caid>:[<provider>]:[<srvid>]:[<ecmpid>]:[<irdeto chid>]
+#       M - Map
+#               format:
+#                       M: <caid>:[<provider>]:[<srvid>]:[<ecmpid>] <target caid >:[<target provider>]
+#       D - Delay
+#               format:
+#                       D: <caid>:[<provider>]:[<srvid>]:[<ecmpid>] <delay (ms)>
+#
+#
+
+# NTV+
+P: 0500:040600
+P: 0500:050B00
+
+# Tricolor
+M: 4AE1 4AE1:0
+M: 4AE0 4AE0:0

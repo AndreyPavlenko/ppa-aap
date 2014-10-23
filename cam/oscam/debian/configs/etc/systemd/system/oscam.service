@@ -1,0 +1,15 @@
+[Unit]
+Description=Open Source Conditional Access Module
+After=network.target
+Before=vdr.service
+StopWhenUnneeded=true
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/default/oscam
+ExecStart=/usr/bin/oscam --config-dir "${CONFIG_DIR}" --debug "${DEBUG_LEVEL}"
+RestartSec=1
+Restart=on-failure
+
+[Install]
+WantedBy=vdr.service

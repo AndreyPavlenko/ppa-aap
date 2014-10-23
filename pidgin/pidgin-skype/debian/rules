@@ -1,0 +1,12 @@
+#!/usr/bin/make -f
+
+DESTDIR = $(CURDIR)/debian/pidgin-skype
+
+%:
+	dh $@
+	
+override_dh_auto_build:
+	$(MAKE) all
+
+override_dh_auto_install:
+	$(MAKE) DESTDIR=$(DESTDIR) install

@@ -1,0 +1,6 @@
+#!/bin/sh
+
+VIDEO="$(curl 'http://www.youtube.com/user/HromadskeTV' 2>/dev/null | grep -oP -m 1 ' data-video-ids=".+?" ' | awk -F '"' '{print $2}')"
+
+: ${DIR:="$(dirname "$0")"}
+. "$DIR/youtube"

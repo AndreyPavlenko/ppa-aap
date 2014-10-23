@@ -1,0 +1,15 @@
+#!/usr/bin/make -f
+
+DIR := $(CURDIR)
+DESTDIR := $(DIR)/debian/tmp
+
+%:
+	dh $@ 
+
+override_dh_auto_build:
+	$(MAKE) DESTDIR="$(DESTDIR)"
+
+override_dh_auto_install:
+	$(MAKE) install DESTDIR="$(DESTDIR)"
+	[ -d "$(DESTDIR)/etc/vdr/plugins" ] || mkdir -p "$(DESTDIR)/etc/vdr/plugins"
+	cp "$(DIR)/debian/plugin.vnsiserver.conf" "$(DESTDIR)/etc/vdr/plugins/"

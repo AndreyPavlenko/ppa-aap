@@ -1,0 +1,11 @@
+[Unit]
+Description=Stop VDR before suspend
+Before=sleep.target
+
+[Service]
+Type=oneshot
+Environment=STATUS_FILE=/var/run/vdr.pm
+ExecStart=/bin/sh -c 'if systemctl -q is-active vdr; then touch $STATUS_FILE; systemctl stop vdr; else rm -f $STATUS_FILE; fi'
+
+[Install]
+WantedBy=sleep.target

@@ -1,0 +1,17 @@
+#!/usr/bin/make -f
+
+DIR := $(CURDIR)
+DESTDIR := $(DIR)/debian/tmp
+
+%:
+	dh $@ 
+
+override_dh_auto_build:
+	$(MAKE)
+
+override_dh_auto_install:
+	$(MAKE) install DESTDIR="$(DESTDIR)"
+	mkdir -p "$(DESTDIR)/etc/vdr/plugins"
+	cp "$(DIR)/debian/plugin.dvbapi.conf" "$(DESTDIR)/etc/vdr/plugins" 
+
+override_dh_installchangelogs:

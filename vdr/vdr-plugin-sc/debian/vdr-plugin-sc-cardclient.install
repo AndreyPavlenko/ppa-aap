@@ -1,0 +1,2 @@
+etc/vdr/plugins/sc/cardclient.conf
+usr/lib/vdr/plugins/libsc-*cardclient*.so.*

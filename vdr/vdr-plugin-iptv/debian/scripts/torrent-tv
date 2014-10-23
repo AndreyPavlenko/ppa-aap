@@ -1,0 +1,8 @@
+#!/bin/sh
+
+SCRIPTS_DIR="$(cd "$(dirname "$0")"; pwd)"
+
+[ -e '/etc/vdr/plugins/iptv/torrent-tv.conf' ] && . '/etc/vdr/plugins/iptv/torrent-tv.conf'
+: ${URL:='http://127.0.0.1:8000/torrenttv'}
+
+. "$SCRIPTS_DIR/m3u2iptv"

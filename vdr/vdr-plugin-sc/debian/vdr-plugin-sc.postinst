@@ -1,0 +1,8 @@
+#! /bin/sh
+set -e
+
+if [ "$1" = 'configure' ]
+then
+    [ -d /etc/vdr/plugins/sc ] || mkdir /etc/vdr/plugins/sc
+    chown vdr:vdr /etc/vdr/plugins/sc
+fi

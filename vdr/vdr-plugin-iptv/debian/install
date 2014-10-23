@@ -1,0 +1,6 @@
+debian/scripts/vlc2iptv      usr/share/vdr/plugins/iptv/
+debian/scripts/m3u2iptv      usr/share/vdr/plugins/iptv/
+debian/scripts/torrent-tv    usr/share/vdr/plugins/iptv/
+debian/scripts/commons.sh    usr/share/vdr/plugins/iptv/
+debian/scripts/hromadske-tv  usr/share/vdr/plugins/iptv/
+debian/scripts/youtube       usr/share/vdr/plugins/iptv/

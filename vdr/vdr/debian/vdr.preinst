@@ -1,0 +1,11 @@
+#! /bin/sh
+set -e
+
+DISTRIB_VERSION="$(lsb_release -sr)"
+
+if [ -f /etc/init.d/vdr ] && dpkg --compare-versions "$DISTRIB_VERSION" lt '14.10'
+then
+    # Remove obsolete SysV links
+    /etc/init.d/vdr stop > /dev/null 2>&1 || true
+    update-rc.d -f vdr remove > /dev/null 2>&1 || true
+fi

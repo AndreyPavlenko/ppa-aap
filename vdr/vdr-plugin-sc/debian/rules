@@ -1,0 +1,25 @@
+#!/usr/bin/make -f
+
+DIR := $(CURDIR)
+DESTDIR := $(DIR)/debian/tmp
+NPROC := $(shell getconf _NPROCESSORS_ONLN)
+
+%:
+	dh $@ 
+
+override_dh_auto_build:
+	dh_auto_build -- -j$(NPROC)
+
+override_dh_auto_install:
+	dh_auto_build -- install DESTDIR="$(DESTDIR)"
+	
+	# SC configs
+	[ -d "$(DESTDIR)/etc/vdr/plugins/sc" ] || mkdir -p "$(DESTDIR)/etc/vdr/plugins/sc"
+	sed -e 's/^[^#]/# \0/' \
+	    < "$(DIR)/examples/cardclient.conf.example" \
+	    > "$(DESTDIR)/etc/vdr/plugins/sc/cardclient.conf"
+	cp "$(DIR)/debian/plugin.sc.conf" "$(DESTDIR)/etc/vdr/plugins/plugin.sc.conf"
+
+override_dh_installdocs:
+
+override_dh_installchangelogs:

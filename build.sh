@@ -17,7 +17,7 @@ else
     BUILD_CMD='build'
 fi
 
-: ${EXCLUDE:="wicard|ffdecsa"}
+: ${EXCLUDE:=""}
 BUILD_SCRIPTS="$(ls */build.sh)"
 [ -z "$EXCLUDE" ] || BUILD_SCRIPTS="$(echo "$BUILD_SCRIPTS" | grep -Ev "($EXCLUDE)")"
 
@@ -70,8 +70,14 @@ clean() {
 check_updates() {
     if [ "$DIR" = "$PPA_ROOT_DIR" ]
     then
-       for i in $BUILD_SCRIPTS; do "./$i" check_updates; done
-       return 0
+        for i in $BUILD_SCRIPTS
+        do 
+            local dir="$(dirname "$i")"
+            echo "$(basename "$dir"):"
+            "./$i" check_updates | while read i; do echo "    $i"; done
+            echo
+        done
+        return 0
     fi
     
     (for i in $BUILD_SCRIPTS
@@ -84,8 +90,14 @@ check_updates() {
 version() {
     if [ "$DIR" = "$PPA_ROOT_DIR" ]
     then
-       for i in $BUILD_SCRIPTS; do "./$i" version; done
-       return 0
+        for i in $BUILD_SCRIPTS
+        do 
+            local dir="$(dirname "$i")"
+            echo "$(basename "$dir"):"
+            "./$i" version | while read i; do echo "    $i"; done
+            echo
+        done
+        return 0
     fi
     
     (for i in $BUILD_SCRIPTS

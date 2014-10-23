@@ -1,0 +1,2 @@
+etc/vdr/plugins/upnp/channelTitle.conf
+usr/lib/vdr/plugins/libupnp-dvb-profiler.so.*

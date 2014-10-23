@@ -1,0 +1,33 @@
+#! /bin/sh
+set -e
+
+USER='vdr'
+GROUP='vdr'
+DISTRIB_VERSION="$(lsb_release -sr)"
+
+case "$1" in
+    configure)
+        addgroup --quiet --system $GROUP || true
+        adduser --system --home /var/lib/vdr --shell /bin/false \
+                --gecos "VDR user" --no-create-home \
+                --disabled-login --disabled-password \
+                --ingroup $GROUP $USER > /dev/null 2>&1 || true
+        adduser $USER video > /dev/null 2>&1 || true
+        adduser $USER dialout > /dev/null 2>&1 || true
+        chown -R $USER:$GROUP /etc/vdr
+        
+        if dpkg --compare-versions "$DISTRIB_VERSION" ge '14.10'
+        then
+            systemctl -q enable vdr-resume || true
+            systemctl -q enable vdr-suspend || true
+        fi
+    ;;
+
+    abort-upgrade|abort-remove|abort-deconfigure)
+    ;;
+
+    *)
+        echo "postinst called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac

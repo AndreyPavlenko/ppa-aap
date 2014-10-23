@@ -1,0 +1,4 @@
+usr/share/aceproxy/acehttp.py          usr/bin/aceproxy
+etc/aceproxy/aceconfig.py              usr/share/aceproxy/aceconfig.py
+etc/aceproxy/ytv.py                    usr/share/aceproxy/plugins/config/ytv.py
+etc/aceproxy/torrenttv.py              usr/share/aceproxy/plugins/config/torrenttv.py

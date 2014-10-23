@@ -1,0 +1,44 @@
+#! /bin/sh
+set -e
+
+USER='aceproxy'
+GROUP="$USER"
+HOME="/var/lib/$USER"
+
+case "$1" in
+    configure)
+        addgroup --quiet --system $GROUP || true
+        adduser --system --home $HOME --shell /bin/false \
+                --gecos "ACE Proxy user" --no-create-home \
+                --disabled-login --disabled-password \
+                --ingroup $GROUP $USER > /dev/null 2>&1 || true
+        
+        mkdir -p $HOME
+        chown -R $USER:$GROUP $HOME
+        
+        # Raketa-tv is no longer supported
+        rm -f /etc/aceproxy/raketatv_config.py
+        
+        # Convert old torrent-tv config
+        if [ -f /etc/aceproxy/ttvplaylist_config.py ]
+        then
+            url="$(grep -oE '^\s*url\s*=.*$' /etc/aceproxy/ttvplaylist_config.py)"
+            rm -f /etc/aceproxy/ttvplaylist_config.py
+            
+            if [ ! -z "$url" ]
+            then
+                sed -i -r "s|^\s*url\s*=.*$|$url|" /etc/aceproxy/torrenttv.py || true
+            fi
+        fi
+        
+        systemctl enable aceproxy > /dev/null 2>&1 || true
+    ;;
+
+    abort-upgrade|abort-remove|abort-deconfigure)
+    ;;
+
+    *)
+        echo "postinst called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac

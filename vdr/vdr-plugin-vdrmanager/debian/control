@@ -1,0 +1,16 @@
+Source: vdr-plugin-vdrmanager
+Section: video
+Priority: extra
+Maintainer: #MAINTAINER#
+Build-Depends: debhelper (>= 7.0.50~), vdr-dev (>= #VDR_VERSION#), pkg-config, 
+ zlib1g-dev, libssl-dev
+Standards-Version: 3.9.4
+Homepage: http://projects.vdr-developer.org/projects/vdr-manager
+
+Package: vdr-plugin-vdrmanager
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, vdr (>= #VDR_VERSION#)
+Description: VDR plugin providing service for the VDR-Manager Android App
+ This plugin for the Linux Video Disc Recorder (VDR) is required to use
+ the VDR-Manager Android App. It provides the necessary service interface
+ which allows the VDR Manager App to control the VDR.

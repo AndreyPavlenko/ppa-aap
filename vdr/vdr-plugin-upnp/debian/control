@@ -1,0 +1,78 @@
+Source: vdr-plugin-upnp
+Section: video
+Priority: extra
+Maintainer: #MAINTAINER#
+Build-Depends: debhelper (>= 8), vdr-dev (>= #VDR_VERSION#), gettext,
+ libupnp3-dev | libupnp6-dev, libsqlite3-dev, libavcodec-dev, libavformat-dev,
+ libboost-dev, libtntnet-dev, libtntdb-dev, pkg-config
+Standards-Version: 3.9.3
+Homepage: http://upnp.vdr-developer.org
+
+Package: vdr-plugin-upnp
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, vdr (>= #VDR_VERSION#), tntdb-sqlite2 | tntdb-sqlite4
+Description: This vdr-plugin extends the VDR with the possibility to act as an UPnP/DLNA Media Server
+ This Plugins extends the VDR with the possibility to act as an UPnP/DLNA Media
+ Server (DMS). It will serve VDR's contents in the network to any UPnP-AV and
+ DLNA capable devices.
+
+Package: vdr-plugin-upnp-dvb-profiler
+Architecture: any
+Depends: vdr-plugin-upnp (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Description: DVB profiler sub-plug in for the VDR UPnP/DLNA media server plug in.
+ The DVB profiler sub-plug in profiles live-TV channels and VDR
+ recordings and finds their specific DLNA profile.
+ .
+ The following profiles are supported regarding the channel
+ properties:
+ .
+ SD channels and recordings: MPEG_TS_SD_EU_ISO
+ HD channels and recordings: AVC_TS_HD_EU_ISO
+ .
+ Radio channels and recordings as well as old PES recordings are
+ currently not supported.
+
+Package: vdr-plugin-upnp-file-provider
+Architecture: any
+Depends: vdr-plugin-upnp (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Description: File provider sub-plug in for the VDR UPnP/DLNA media server plug in.
+ The file provider provides access to any files on the file system. It
+ scans all files, which listed in the directory configuration file of
+ the sub-plug in.
+ .
+ It provides the following URI scheme:   file://
+ .
+ Additionally, it is used to access the files for streaming.
+ .
+ The provider implemented the seekable interface and therefore allows
+ seeking in the files via byte based seeks.
+
+Package: vdr-plugin-upnp-rec-provider
+Architecture: any
+Depends: vdr-plugin-upnp (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Description: Recording provider sub-plug in for the VDR UPnP/DLNA media server plug in.
+ The recording provider provides access to VDR recordings. It scans
+ the recording directories given by the VDRs internal structure and
+ returns a list of recording resources.
+ .
+ It provides the following URI scheme:   rec://
+ .
+ Additionally, it is used to access the recording files for streaming.
+ .
+ The provider implemented the seekable interface and therefore allows
+ seeking in the recordings via byte based seeks.
+
+Package: vdr-plugin-upnp-vdr-provider
+Architecture: any
+Depends: vdr-plugin-upnp (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}, 
+ vdr-plugin-streamdev-server
+Description: VDR provider sub-plug in for the VDR UPnP/DLNA media server plug in.
+ The live TV provider provides access to VDR live-tv channels. It
+ scans the channels given by the VDRs internal structure and returns
+ a list of channel IDs
+ .
+ It provides the following URI scheme:   vdr://
+ .
+ The live TV provider has not implemented the file access interface.
+ To access live tv channels, the streamdev server plugin and the
+ appropriate externremux.sh must be installed on the system.

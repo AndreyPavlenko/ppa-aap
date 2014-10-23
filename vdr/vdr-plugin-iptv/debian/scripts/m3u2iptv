@@ -1,0 +1,14 @@
+#!/bin/sh
+
+: ${DIR:="$(dirname "$0")"}
+
+EXTRACT_PARAMS='URL'
+. "$DIR/commons.sh"
+
+[ -z "$URL" ] && fail "playlist URL is not specified"
+URL="$(echo "$URL" | sed 's/%3A/:/g')"
+
+CHANNEL_URL="$(curl "$URL" 2>/dev/null | grep ",$CHANNEL_NAME\\s*$" -A 1 -m 1 | grep -v '^#')"
+[ -z "$CHANNEL_URL" ] && fail "no channel $CHANNEL_NAME found in playlist $PLAYLIST_URL"
+
+play "${CHANNEL_URL}"

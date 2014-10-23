@@ -1,0 +1,13 @@
+#!/bin/sh
+set -x
+: ${DIR:="$(dirname "$0")"}
+
+EXTRACT_PARAMS='VIDEO'
+. "$DIR/commons.sh"
+
+[ -z "$VIDEO" ] && fail "The parameter VIDEO=<stream id> is not specified"
+
+YOUTUBE_URL="http://www.youtube.com/watch?v=${VIDEO}"
+VIDEO_URL="$(youtube-dl -f 93 -g "$YOUTUBE_URL")"
+
+play "${VIDEO_URL}"

@@ -1,0 +1,7 @@
+#! /bin/sh
+
+if [ "$1" = 'purge' ]
+then
+    rm -rf /etc/vdr/plugins/iptv
+    rm -rf /usr/share/vdr/plugins/iptv
+fi

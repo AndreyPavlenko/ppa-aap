@@ -1,0 +1,8 @@
+#! /bin/sh
+set -e
+
+if [ "$1" = 'configure' ]
+then
+    [ -d /etc/vdr/plugins/xineliboutput ] || mkdir -p /etc/vdr/plugins/xineliboutput
+    chown vdr:vdr /etc/vdr/plugins/xineliboutput
+fi

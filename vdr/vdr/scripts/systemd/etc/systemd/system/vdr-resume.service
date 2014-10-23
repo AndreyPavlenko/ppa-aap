@@ -1,0 +1,10 @@
+[Unit]
+Description=Start VDR after resume from suspend
+After=sleep.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c 'sleep 2; [ -f /var/run/vdr.pm ] && ! systemctl -q is-active && systemctl start vdr || true'
+
+[Install]
+WantedBy=sleep.target

@@ -1,0 +1,13 @@
+diff --git a/Make.config b/Make.config
+index 9b3507d..cadeafd 100644
+--- a/Make.config
++++ b/Make.config
+@@ -37,7 +37,7 @@ TMPDIR ?= /tmp
+ 
+ ECPPC ?= ecppc
+ export CFLAGS   = $(call PKGCFG,cflags)
+-export CXXFLAGS = $(call PKGCFG,cxxflags)
++export CXXFLAGS = $(shell echo "$(call PKGCFG,cxxflags)" | sed -e 's/-Werror=overloaded-virtual//g')
+ 
+ ### The version number of VDR's plugin API:
+ 

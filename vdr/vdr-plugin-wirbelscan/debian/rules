@@ -1,0 +1,14 @@
+#!/usr/bin/make -f
+
+MAKE_OPTIONS = VDRDIR=/usr/include/vdr LIBDIR=. LOCALEDIR=locale
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	touch po/*.po
+	dh_auto_build -- all $(MAKE_OPTIONS)
+
+override_dh_auto_clean:
+	$(MAKE) -o .dependencies clean $(MAKE_OPTIONS)
+	rm -rf locale libvdr-*.so.*

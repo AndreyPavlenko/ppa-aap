@@ -1,0 +1,38 @@
+#! /bin/sh
+
+### BEGIN INIT INFO
+# Provides:          vdr
+# Required-Start:
+# Required-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Video Disk Recorder (VDR)
+### END INIT INFO
+
+JOB='vdr'
+
+if pidof systemd > /dev/null
+then
+    IS_UPSTART='true'
+    CTL='systemctl'
+else
+    CTL='initctl'
+fi
+
+case "$1" in
+  start|stop|status)
+    $CTL $1 $JOB
+    ;;
+  restart)
+    if [ -z "$IS_UPSTART" ]
+    then
+        $CTL stop $JOB > /dev/null 2>&1
+        $CTL start $JOB
+    else
+        $CTL restart $JOB
+    fi
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart|status}"
+    exit 1
+esac

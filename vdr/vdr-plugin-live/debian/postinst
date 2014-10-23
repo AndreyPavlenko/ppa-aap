@@ -1,0 +1,8 @@
+#! /bin/sh
+set -e
+
+if [ "$1" = 'configure' ]
+then
+    [ -d /etc/vdr/plugins/live ] || mkdir -p /etc/vdr/plugins/live
+    chown vdr:vdr /etc/vdr/plugins/live
+fi

@@ -1,0 +1,34 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+DESTDIR := $(CURDIR)/debian/aceproxy
+DISTRIB_VERSION := $(shell lsb_release -sr)
+
+.PHONY: override_dh_auto_install override_dh_installdocs override_dh_installchangelogs
+
+override_dh_auto_install:
+	mkdir -p "$(DESTDIR)/etc/aceproxy"
+	mkdir -p "$(DESTDIR)/usr/share/aceproxy"
+	ls "$(CURDIR)" | grep -v 'debian' | xargs -I '{}' cp -rv '{}' "$(DESTDIR)/usr/share/aceproxy"
+	mv "$(DESTDIR)/usr/share/aceproxy/aceconfig.py"                "$(DESTDIR)/etc/aceproxy/"
+	mv "$(DESTDIR)/usr/share/aceproxy/plugins/config/ytv.py"       "$(DESTDIR)/etc/aceproxy/"
+	mv "$(DESTDIR)/usr/share/aceproxy/plugins/config/torrenttv.py" "$(DESTDIR)/etc/aceproxy/"
+	sed -i -r 's/acespawn *= *False/acespawn = True/'             "$(DESTDIR)/etc/aceproxy/aceconfig.py"
+#	sed -i -r 's/vlcspawn *= *False/vlcspawn = True/'             "$(DESTDIR)/etc/aceproxy/aceconfig.py"
+#	sed -i -r 's/vlcuse *= *False/vlcuse = True/'             "$(DESTDIR)/etc/aceproxy/aceconfig.py"
+#	sed -i -r 's/videodelay *= *.+/videodelay = 0/'           "$(DESTDIR)/etc/aceproxy/aceconfig.py"
+	sed -i -r 's/videoobey *= *True/videoobey = False/'       "$(DESTDIR)/etc/aceproxy/aceconfig.py"
+	sed -i -r 's/videopausedelay *= *.+/videopausedelay = 0/' "$(DESTDIR)/etc/aceproxy/aceconfig.py"
+	sed -i -r 's/group-title="%s"/group-title="IPTV: %s"/g'   "$(DESTDIR)/usr/share/aceproxy/plugins/modules/PlaylistGenerator.py"
+	
+ifeq ($(shell dpkg --compare-versions '$(DISTRIB_VERSION)' lt '14.10'; echo $$?),0)
+	mkdir -p "$(DESTDIR)/etc/init"
+	cp -v "$(CURDIR)/debian/"*.conf "$(DESTDIR)/etc/init"
+else
+	mkdir -p "$(DESTDIR)/etc/systemd/system"
+	cp -v "$(CURDIR)/debian/"*.service "$(DESTDIR)/etc/systemd/system"
+endif
+
+override_dh_installdocs override_dh_installchangelogs:

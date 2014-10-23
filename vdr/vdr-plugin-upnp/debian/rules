@@ -1,0 +1,14 @@
+#!/usr/bin/make -f
+
+NPROC := $(shell getconf _NPROCESSORS_ONLN)
+
+%:
+	dh $@
+
+.PHONY: override_dh_auto_build
+
+
+override_dh_auto_build:
+	$(MAKE) -j$(NPROC)
+
+override_dh_installchangelogs override_dh_installdocs:

@@ -1,0 +1,16 @@
+Source: vdr-plugin-vnsiserver
+Section: video
+Priority: extra
+Maintainer: #MAINTAINER#
+Build-Depends: debhelper (>= 8.0.0), vdr-dev (>= #VDR_VERSION#), pkg-config, 
+ gettext
+Standards-Version: 3.9.3
+Homepage: https://github.com/opdenkamp/xbmc-pvr-addons/tree/master/addons/pvr.vdr.vnsi/vdr-plugin-vnsiserver
+Vcs-Git: https://github.com/opdenkamp/xbmc-pvr-addons.git
+Vcs-Browser: https://github.com/opdenkamp/xbmc-pvr-addons/tree/master/addons/pvr.vdr.vnsi/vdr-plugin-vnsiserver
+
+Package: vdr-plugin-vnsiserver
+Architecture: any
+Depends: ${shlibs:Depends}, vdr (>= #VDR_VERSION#)
+Description: VDR-Network-Streaming-Interface
+ VDR-Network-Streaming-Interface

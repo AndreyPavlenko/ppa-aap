@@ -1,0 +1,18 @@
+#! /bin/sh
+
+USER='aceproxy'
+GROUP="$USER"
+HOME="/var/lib/$USER"
+
+case "$1" in
+    remove)
+        rm -f /var/log/upstart/aceproxy*.log*
+    ;;
+    purge)
+        groupdel $GROUP   2>/dev/null || true
+        userdel -rf $USER 2>/dev/null || true
+        rm -rf /etc/aceproxy
+        rm -rf $HOME
+        rm -f /var/log/upstart/aceproxy*.log*
+    ;;
+esac

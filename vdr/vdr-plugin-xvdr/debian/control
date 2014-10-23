@@ -1,0 +1,16 @@
+Source: vdr-plugin-xvdr
+Section: video
+Priority: extra
+Maintainer: #MAINTAINER#
+Build-Depends: debhelper (>= 8.0.0), vdr-dev (>= #VDR_VERSION#), zlib1g-dev, 
+ pkg-config
+Standards-Version: 3.9.3
+Homepage: https://github.com/pipelka/vdr-plugin-xvdr
+Vcs-Git: https://github.com/pipelka/vdr-plugin-xvdr.git
+Vcs-Browser: https://github.com/pipelka/vdr-plugin-xvdr
+
+Package: vdr-plugin-xvdr
+Architecture: any
+Depends: ${shlibs:Depends}, vdr (>= #VDR_VERSION#)
+Description: XBMC XVDR plugin for VDR
+ This plugin for VDR allows XBMC clients to connect.

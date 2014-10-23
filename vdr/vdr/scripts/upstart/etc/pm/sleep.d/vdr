@@ -1,0 +1,12 @@
+#!/bin/sh
+
+STATUS_FILE='/var/run/vdr.pm'
+
+case $1 in
+    suspend|suspend_hybrid|hibernate)
+        status vdr | tee "$STATUS_FILE" | grep -q 'start/' && stop vdr || true
+        ;;
+    resume|thaw)
+        grep -q 'start/' "$STATUS_FILE" && start vdr || true
+        ;;
+esac

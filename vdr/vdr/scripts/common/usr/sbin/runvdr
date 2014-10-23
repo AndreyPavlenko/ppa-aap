@@ -1,0 +1,113 @@
+#! /bin/sh
+#
+# Video Disk Recorder (VDR) startup script
+#
+
+. /etc/default/vdr
+
+EXECUTABLE='/usr/bin/vdr'
+USER='vdr'
+GROUP='vdr'
+
+if [ "$RELOAD_DRIVERS" = 'true' ]
+then
+    MODULES=$(lsmod | awk '/^dvb/ {gsub(/,/,"\n", $4); print $4}' | sort -u | tac | grep -v '^$')
+    
+    if [ -z "$MODULES" ]
+    then
+        RELOAD_DRIVERS='false'
+    else
+        MODULES="$MODULES dvb_core"
+    fi
+fi
+
+unloadModule() {
+    for i in $(seq 1 2)
+    do
+        modprobe -r $MODULE && break || sleep 1
+    done
+}
+
+unloadDrivers() {
+    for MODULE in $MODULES
+    do 
+        unloadModule $MODULE >/dev/null 2>&1
+    done
+}
+
+loadDrivers() {
+    for MODULE in $MODULES
+    do 
+        modprobe $MODULE >/dev/null 2>&1
+    done
+}
+
+reloadDrivers() {
+    echo "Reloading modules: $MODULES"
+    
+    for i in $(seq 1 $RELOAD_RETRIES)
+    do
+        unloadDrivers
+        sleep $LOAD_DRIVERS_DELAY
+        loadDrivers
+        sleep $RELOAD_CONDITION_DELAY
+        $RELOAD_CONDITION && break
+    done
+}
+
+getLang() {
+    [ -r /etc/environment ]    && . /etc/environment > /dev/null 2>&1 || true
+    [ -r /etc/default/locale ] && . /etc/default/locale > /dev/null 2>&1 || true
+
+    if [ -n "$LANG" ]
+    then
+        echo "$LANG"
+    elif  [ -n "$LC_ALL" ]
+    then
+        echo "$LC_ALL"
+    else
+        echo 'C.UTF-8'
+    fi
+}
+
+setEnv() {
+    if [ -z "$VDR_LANG" ]
+    then
+        local VDR_LANG=$(getLang)
+    fi
+
+    export LANG=$VDR_LANG LC_ALL=$VDR_LANG $VDR_ENV
+}
+
+start() {
+    local plugins=''
+    local args="-u $USER -v $VIDEO_DIR -c $CFG_DIR -L $PLUGIN_DIR -s $VDRSHUTDOWN \
+                -E $EPG_FILE -g /tmp --port $SVDRP_PORT $OPTIONS $@"
+    local epg_dir=$(dirname "$EPG_FILE")
+
+    for i in $PLUGINS
+    do
+        if [ -f "$PLUGIN_CFG_DIR/plugin.$i.conf" ]
+        then
+            a="$(echo $(cat "$PLUGIN_CFG_DIR/plugin.$i.conf" | sed "s/ *#.*$//"))"
+            plugins="$plugins -P '$i $a'"
+        else
+            plugins="$plugins -P $i"
+        fi
+    done
+
+    [ ! -d "$epg_dir" ] && mkdir "$epg_dir" || true
+    [ ! -d "$VIDEO_DIR" ] && mkdir "$VIDEO_DIR" || true
+    chown $USER:$GROUP "$epg_dir"
+    chown $USER:$GROUP "$VIDEO_DIR"
+    setEnv
+    
+    [ "$RELOAD_DRIVERS" = 'true' ] && reloadDrivers
+
+    ([ -z "$PLUGINS" ] && echo 'Starting VDR') || \
+    echo "Starting VDR with plugins: $PLUGINS"
+    
+    eval exec "$EXECUTABLE" $args $plugins
+}
+
+start $@

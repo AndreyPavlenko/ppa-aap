@@ -1,0 +1,12 @@
+[Unit]
+Description=Video Disk Recorder (VDR) service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/sbin/runvdr
+RestartSec=1
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

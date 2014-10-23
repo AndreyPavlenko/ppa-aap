@@ -1,0 +1,23 @@
+#!/usr/bin/make -f
+
+DIR := $(CURDIR)
+DESTDIR := $(DIR)/debian/tmp
+
+%:
+	dh $@ 
+
+override_dh_auto_build:
+	$(MAKE) DESTDIR="$(DESTDIR)"
+	$(MAKE) -C "$(DIR)/tools"
+
+override_dh_auto_install:
+	$(MAKE) install DESTDIR="$(DESTDIR)"
+	mkdir -p "$(DESTDIR)/usr/bin"
+	cp "$(DIR)/tools/serviceref" "$(DESTDIR)/usr/bin"
+	
+	# XVDR configs
+	[ -d "$(DESTDIR)/etc/vdr/plugins/xvdr" ] || mkdir -p "$(DESTDIR)/etc/vdr/plugins/xvdr"
+	sed -e 's;^.*PiconsURL *=.*;PiconsURL = /usr/share/xvdr/picons;' \
+	< "$(DIR)/xvdr/xvdr.conf" > "$(DESTDIR)/etc/vdr/plugins/xvdr/xvdr.conf"
+
+override_dh_installchangelogs:

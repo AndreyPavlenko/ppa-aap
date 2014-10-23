@@ -1,0 +1,66 @@
+Source: vdr-plugin-sc
+Section: video
+Priority: extra
+Maintainer: #MAINTAINER#
+Build-Depends: debhelper (>= 8.0.0), vdr-dev (>= #VDR_VERSION#), 
+ libssl-dev, pkg-config
+Standards-Version: 3.9.3
+
+Package: vdr-plugin-sc
+Architecture: any
+Depends: ${shlibs:Depends}, vdr (>= #VDR_VERSION#)
+Description: A software emulated CAM
+ The plugin decrypts the scrambling codewords from the incomming ECM stream. The
+ actual descrambling of the video stream is either done by the ECD chip on
+ full-featured DVB cards or with the included FFdecsa implementation on budget
+ cards.
+
+Package: vdr-plugin-sc-cardclient
+Architecture: any
+Depends: ${shlibs:Depends}, vdr-plugin-sc (= ${binary:Version})
+Description: Cardclient system for vdr-plugin-sc
+
+Package: vdr-plugin-sc-conax
+Architecture: any
+Depends: ${shlibs:Depends}, vdr-plugin-sc (= ${binary:Version})
+Description: Conax system for vdr-plugin-sc
+
+Package: vdr-plugin-sc-constcw
+Architecture: any
+Depends: ${shlibs:Depends}, vdr-plugin-sc (= ${binary:Version})
+Description: Constcw system for vdr-plugin-sc
+
+Package: vdr-plugin-sc-cryptoworks
+Architecture: any
+Depends: ${shlibs:Depends}, vdr-plugin-sc (= ${binary:Version})
+Description: Cryptoworks system for vdr-plugin-sc
+
+Package: vdr-plugin-sc-irdeto
+Architecture: any
+Depends: ${shlibs:Depends}, vdr-plugin-sc (= ${binary:Version})
+Description: Irdeto system for vdr-plugin-sc
+
+Package: vdr-plugin-sc-nagra
+Architecture: any
+Depends: ${shlibs:Depends}, vdr-plugin-sc (= ${binary:Version})
+Description: Nagra system for vdr-plugin-sc
+
+Package: vdr-plugin-sc-seca
+Architecture: any
+Depends: ${shlibs:Depends}, vdr-plugin-sc (= ${binary:Version})
+Description: Seca system for vdr-plugin-sc
+
+Package: vdr-plugin-sc-shl
+Architecture: any
+Depends: ${shlibs:Depends}, vdr-plugin-sc (= ${binary:Version})
+Description: SHL system for vdr-plugin-sc
+
+Package: vdr-plugin-sc-viaccess
+Architecture: any
+Depends: ${shlibs:Depends}, vdr-plugin-sc (= ${binary:Version})
+Description: Viaccess system for vdr-plugin-sc
+
+Package: vdr-plugin-sc-videoguard2
+Architecture: any
+Depends: ${shlibs:Depends}, vdr-plugin-sc (= ${binary:Version})
+Description: Videoguard2 system for vdr-plugin-sc

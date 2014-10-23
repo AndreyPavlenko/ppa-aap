@@ -1,0 +1,21 @@
+#! /bin/sh
+
+USER='vdr'
+GROUP='vdr'
+
+case "$1" in
+    purge|remove)
+        if [ "$1" = 'purge' ]
+        then
+            groupdel $GROUP   2>/dev/null || true
+            userdel -rf $USER 2>/dev/null || true
+            rm -rf /etc/vdr/themes
+            rm -f  /etc/vdr/timers.conf
+            rm -rf /var/cache/vdr
+            rm -rf /var/lib/video.00
+        fi
+        
+        rm -f  /var/run/vdr.*
+        rm -f  /var/log/upstart/vdr.*
+    ;;
+esac

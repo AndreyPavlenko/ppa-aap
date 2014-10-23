@@ -1,0 +1,4 @@
+usr/share/locale/*/LC_MESSAGES/*
+usr/share/vdr/plugins/upnp/httpdocs
+usr/lib/vdr/plugins/libvdr-upnp.so.*
+debian/plugin.upnp.conf                     etc/vdr/plugins/

@@ -1,0 +1,12 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+.PHONY: override_dh_auto_install override_dh_installdocs override_dh_installchangelogs
+
+override_dh_auto_install:
+	dh_auto_install --destdir=debian/vdr-plugin-iptv
+	sed -i 's|/var/lib/vdr/channels.conf|/etc/vdr/channels.conf|g' debian/vdr-plugin-iptv/usr/share/vdr/plugins/iptv/vlc2iptv || true
+
+override_dh_installdocs override_dh_installchangelogs:

@@ -1,0 +1,19 @@
+Source: aceproxy
+Section: video
+Priority: extra
+Maintainer: #MAINTAINER#
+Build-Depends: debhelper (>= 8.0.0), lsb-release
+Standards-Version: 3.9.4
+Homepage: https://github.com/ValdikSS/aceproxy
+
+Package: aceproxy
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, vdr (>= #VDR_VERSION#), 
+ python-gevent, vlc
+Description: Ace Stream HTTP Proxy
+ AceProxy allows you to watch Ace Stream live streams or BitTorrent files over 
+ HTTP. It's written in Python + gevent and should work on both Linux and Windows
+ (Mac OS should work too, but was not tested).
+ .
+ Currently it supports Ace Stream Content-ID hashes (PIDs), .acestream files 
+ and usual torrent files.

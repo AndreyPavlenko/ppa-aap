@@ -1,0 +1,20 @@
+#!/bin/sh
+
+
+case "$1" in
+    remove)
+        DISTRIB_VERSION="$(lsb_release -sr)"
+        
+        if dpkg --compare-versions "$DISTRIB_VERSION" lt '14.10'
+        then
+            stop vdr > /dev/null 2>&1 || true
+        else
+            systemctl -q stop vdr || true
+            systemctl -q disable vdr || true
+            systemctl -q disable vdr-resume || true
+            systemctl -q disable vdr-suspend || true
+        fi
+        
+    ;;
+esac
+

@@ -1,0 +1,10 @@
+#!/usr/bin/make -f
+
+DIR := $(CURDIR)
+DESTDIR := $(DIR)/debian/tmp
+
+%:
+	dh $@ 
+
+override_dh_auto_install:
+	$(MAKE) -p install DESTDIR="$(DESTDIR)" LIBDIR="$(shell pkg-config --variable=libdir vdr)"

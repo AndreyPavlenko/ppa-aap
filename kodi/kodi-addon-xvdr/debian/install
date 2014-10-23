@@ -1,0 +1,2 @@
+debian/xvdr            usr/bin
+debian/xvdr.desktop    usr/share/applications

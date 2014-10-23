@@ -1,0 +1,19 @@
+#! /usr/bin/make -f
+
+DESTDIR := $(CURDIR)/debian/kodi-addon-iptvsimple
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	./autogen.sh
+	./configure --prefix=/usr
+
+override_dh_install:
+	dh_install
+	[ -d "$(DESTDIR)/usr/lib/xbmc" ] && mv "$(DESTDIR)/usr/lib/xbmc" "$(DESTDIR)/usr/lib/kodi"
+	[ -d "$(DESTDIR)/usr/share/xbmc" ] && mv "$(DESTDIR)/usr/share/xbmc" "$(DESTDIR)/usr/share/kodi"
+
+override_dh_installdocs:
+
+override_dh_installchangelogs:

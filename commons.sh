@@ -9,7 +9,7 @@ set -e
 : ${PPA:="$(basename "$(dirname "$DIR")")"}
 : ${PPA_URL:='http://ppa.launchpad.net/aap'}
 
-: ${DEPENDS:='git'}
+DEPENDS="$DEPENDS git"
 
 [ ! -f "$HOME/.build.config" ] || . "$HOME/.build.config" && IGNORE_GLOBAL_CONFIG='true'
 for i in ${BASH_SOURCE[@]}; do i="$(dirname "$i")"; [ -f "$i/build.config" ] && . "$i/build.config"; done
@@ -30,7 +30,7 @@ _changelog() {
     _git_changelog "${cur_version##*~}" "$REV"
 }
 
-_git_bs_ci_count() {
+_bs_ci_count() {
     local path="${1:-"$RELPATH"}"
     git --git-dir="$PPA_ROOT_DIR/.git" log --format='%H' -- "$path" | wc -l
 }
@@ -47,8 +47,11 @@ _git_sha() {
     git --git-dir="$git_dir" log --format='%h' -n1 $rev
 }
 
-_git_version() {
+_pkg_version() {
     local version="$1"
-    local delta="${2:-a}"
-    echo "${version}-$(($(_git_ci_count) + $(_git_bs_ci_count) + $delta))~$(_git_sha)"
+    local delta="${2:-"0"}"
+    local ci_count="${3:-"$(_git_ci_count)"}"
+    local sha="${4:-"$(_git_sha)"}"
+    local bs_ci_count=$(_bs_ci_count)
+    echo "${version}-$(($ci_count + $bs_ci_count + $delta))~${sha}"
 }

@@ -1,0 +1,24 @@
+#! /usr/bin/make -f
+
+DESTDIR := $(CURDIR)/debian/kodi-addon-xvdr
+
+%:
+	dh $@ --parallel
+
+override_dh_auto_configure:
+	sh autogen.sh
+	dh_auto_configure -- --prefix=/usr/lib/kodi
+
+override_dh_install:
+	dh_install
+	mkdir -p "$(DESTDIR)/usr/share/kodi/addons"
+	mv "$(DESTDIR)/usr/lib/kodi/addons/pvr.vdr.xvdr" "$(DESTDIR)/usr/share/kodi/addons"
+	mkdir -p "$(DESTDIR)/usr/lib/kodi/addons/pvr.vdr.xvdr"
+	mv "$(DESTDIR)/usr/share/kodi/addons/pvr.vdr.xvdr/"*.pvr "$(DESTDIR)/usr/lib/kodi/addons/pvr.vdr.xvdr"
+
+override_dh_shlibdeps:
+	dpkg-shlibdeps -Tdebian/kodi-addon-xvdr.substvars $(CURDIR)/debian/kodi-addon-xvdr/usr/lib/kodi/addons/pvr.vdr.xvdr/XBMC_VDR_xvdr.pvr
+
+override_dh_installdocs:
+
+override_dh_installchangelogs:

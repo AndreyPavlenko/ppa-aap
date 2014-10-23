@@ -1,0 +1,12 @@
+Source: kodi-addon-xvdr
+Section: misc
+Priority: extra
+Maintainer: #MAINTAINER#
+Build-Depends: debhelper (>= 5), cdbs, zlib1g-dev, autotools-dev, libtool
+Standards-Version: 3.8.0
+
+Package: kodi-addon-xvdr
+Architecture: any
+Depends: kodi,  ${shlibs:Depends}
+Description: XVDR addon for Kodi
+ This addon allows Kodi to connect to VDR Server running the XVDR plugin.

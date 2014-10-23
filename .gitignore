@@ -1,0 +1,7 @@
+*~
+build/
+distribs/
+sources/
+ppa-builder/
+build.config
+

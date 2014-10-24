@@ -25,14 +25,10 @@ export BUILD_CMD
 export TARGET_PLATFORMS
 export SKIP_UPDATE='true' SKIP_DEPENDS='true' SKIP_UPDATE_BASE='true'
 
-branchname() {
-    cd "$1" && git rev-parse --abbrev-ref HEAD
-}
-
 _update_ppa_builder() {
     if [ "$DIR" == "$PPA_ROOT_DIR" ]
     then
-        echo "Updating ppa-builder ($(branchname "$dir"))" 1>&2
+        echo "Updating ppa-builder" 1>&2
         git "--git-dir=$PPA_BUILDER/.git" --work-tree="$PPA_BUILDER" pull > /dev/null
     fi
 }
@@ -83,7 +79,7 @@ check_updates() {
     (for i in $BUILD_SCRIPTS
     do
         local dir="$(dirname "$i")"
-        echo "$(basename "$dir")|$(branchname "$dir")|$("./$i" check_updates | grep -v "check_updates:")"
+        echo "$(basename "$dir")|$("./$i" check_updates | grep -v "check_updates:")"
     done) | column -t -s '|'
 }
 
@@ -103,7 +99,7 @@ version() {
     (for i in $BUILD_SCRIPTS
     do
         local dir="$(dirname "$i")"
-        echo "$(basename "$dir")|$(branchname "$dir")|$("./$i" version | grep -v "version:")"
+        echo "$(basename "$dir")|$("./$i" version | grep -v "version:")"
     done) | column -t -s '|'
 }
 
@@ -132,7 +128,7 @@ build() {
     done
 }
 
-TARGETS=$(declare -F | cut -d" " -f3 | grep -Eo '^ *[a-z]\w+' | tr -d '[ \t\(\)]' | sort | tr '\n' '|' | head -c -1)
+TARGETS="build|check_updates|clean|update|version"
 [ "$1" = '' ] && target='build' || target="$@"
 
 for t in $target

@@ -43,7 +43,7 @@ KODI_CONFIG_OPTIONS ?= --host=$(DEB_HOST_GNU_TYPE) \
   --disable-profiling \
   --enable-joystick \
   --enable-xrandr \
-  --disable-ccache \
+  --enable-ccache \
   --enable-pulse \
   --enable-rtmp \
   --disable-mid \

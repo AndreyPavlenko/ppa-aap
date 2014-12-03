@@ -9,7 +9,7 @@ Homepage: https://github.com/ValdikSS/aceproxy
 Package: aceproxy
 Architecture: all
 Depends: ${shlibs:Depends}, ${misc:Depends}, vdr (>= #VDR_VERSION#), 
- python-gevent, vlc
+ python-gevent, vlc, python-psutil
 Description: Ace Stream HTTP Proxy
  AceProxy allows you to watch Ace Stream live streams or BitTorrent files over 
  HTTP. It's written in Python + gevent and should work on both Linux and Windows

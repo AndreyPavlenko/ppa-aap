@@ -21,7 +21,6 @@ override_dh_auto_install:
 #	sed -i -r 's/videodelay *= *.+/videodelay = 0/'           "$(DESTDIR)/etc/aceproxy/aceconfig.py"
 	sed -i -r 's/videoobey *= *True/videoobey = False/'       "$(DESTDIR)/etc/aceproxy/aceconfig.py"
 	sed -i -r 's/videopausedelay *= *.+/videopausedelay = 0/' "$(DESTDIR)/etc/aceproxy/aceconfig.py"
-	sed -i -r 's/group-title="%s"/group-title="IPTV: %s"/g'   "$(DESTDIR)/usr/share/aceproxy/plugins/modules/PlaylistGenerator.py"
 	
 ifeq ($(shell dpkg --compare-versions '$(DISTRIB_VERSION)' lt '14.10'; echo $$?),0)
 	mkdir -p "$(DESTDIR)/etc/init"

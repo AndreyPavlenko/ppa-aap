@@ -1,4 +1,5 @@
 usr/share/aceproxy/acehttp.py          usr/bin/aceproxy
 etc/aceproxy/aceconfig.py              usr/share/aceproxy/aceconfig.py
-etc/aceproxy/ytv.py                    usr/share/aceproxy/plugins/config/ytv.py
+etc/aceproxy/p2pproxy.py               usr/share/aceproxy/plugins/config/p2pproxy.py
+etc/aceproxy/torrenttelik.py           usr/share/aceproxy/plugins/config/torrenttelik.py
 etc/aceproxy/torrenttv.py              usr/share/aceproxy/plugins/config/torrenttv.py

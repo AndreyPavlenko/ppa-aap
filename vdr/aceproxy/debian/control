@@ -9,7 +9,7 @@ Homepage: https://github.com/ValdikSS/aceproxy
 Package: aceproxy
 Architecture: all
 Depends: ${shlibs:Depends}, ${misc:Depends},
- python-psutil, python-m2crypto, python-apsw
+ python-gevent, python-psutil, python-m2crypto, python-apsw
 Recommends: vlc
 Description: Ace Stream HTTP Proxy
  AceProxy allows you to watch Ace Stream live streams or BitTorrent files over 

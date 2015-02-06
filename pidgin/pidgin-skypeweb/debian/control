@@ -1,0 +1,16 @@
+Source: pidgin-skypeweb
+Priority: optional
+Maintainer: #MAINTAINER#
+Build-Depends: debhelper (>= 8.0.0), libpurple-dev (>= 1:2.1.1), libjson-glib-dev
+Standards-Version: 3.9.3
+Section: libs
+Homepage: http://code.google.com/p/skype4pidgin
+
+Package: pidgin-skypeweb
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libpurple0 (>= 1:2.1.1),
+ pidgin-skype-theme, pidgin-skype-icons
+Description: Skype Plugin for Pidgin
+ This is a Skype Plugin for Pidgin/libpurple/Adium. It lets you view and chat 
+ with all your Skype buddies from within Pidgin/Adium. 

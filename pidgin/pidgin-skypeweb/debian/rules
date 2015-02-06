@@ -1,0 +1,12 @@
+#!/usr/bin/make -f
+
+DESTDIR = $(CURDIR)/debian/pidgin-skypeweb
+
+%:
+	dh $@
+
+override_dh_auto_install:
+	mkdir -p "$(DESTDIR)/usr/lib/purple-2/"
+	cp libskypeweb.so "$(DESTDIR)/usr/lib/purple-2/"
+
+override_dh_installdocs override_dh_installchangelogs:

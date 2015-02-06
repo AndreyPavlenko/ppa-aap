@@ -7,10 +7,37 @@ Standards-Version: 3.9.3
 Section: libs
 Homepage: http://code.google.com/p/skype4pidgin
 
+Package: pidgin-skype-theme
+Section: libs
+Architecture: all
+Description: Emoticons theme for pidgin-skype
+
+Package: pidgin-skype-icons
+Section: libs
+Architecture: all
+Description: Protocol icons for pidgin-skype
+
 Package: pidgin-skype
 Section: libs
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libpurple0 (>= 1:2.1.1)
+Depends: ${shlibs:Depends}, ${misc:Depends}, libpurple0 (>= 1:2.1.1),
+ pidgin-skype-theme, pidgin-skype-icons
 Description: Skype Plugin for Pidgin
- This is a Skype Plugin for Pidgin/libpurple/Adium. It lets you view and chat with all your Skype buddies from within Pidgin/Adium. You still need Skype to be running to be able to use it, but it lets you keep a consistent user interface and use all the other nifty Pidgin/Adium plugins with it, like spell-checking or OTR encryption.
+ This is a Skype Plugin for Pidgin/libpurple/Adium. It lets you view and chat 
+ with all your Skype buddies from within Pidgin/Adium. You still need Skype to 
+ be running to be able to use it, but it lets you keep a consistent user 
+ interface and use all the other nifty Pidgin/Adium plugins with it, 
+ like spell-checking or OTR encryption.
+
+Package: pidgin-skype-dbus
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libpurple0 (>= 1:2.1.1),
+ pidgin-skype-theme, pidgin-skype-icons
+Description: Skype Plugin for Pidgin
+ This is a Skype Plugin for Pidgin/libpurple/Adium. It lets you view and chat 
+ with all your Skype buddies from within Pidgin/Adium. You still need Skype to 
+ be running to be able to use it, but it lets you keep a consistent user 
+ interface and use all the other nifty Pidgin/Adium plugins with it, 
+ like spell-checking or OTR encryption.
 

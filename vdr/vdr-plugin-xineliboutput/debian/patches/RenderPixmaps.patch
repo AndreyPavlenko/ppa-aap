@@ -1,0 +1,13 @@
+diff --git a/osd.c b/osd.c
+index a6a4552..6e9c251 100644
+--- a/osd.c
++++ b/osd.c
+@@ -515,7 +515,7 @@ void cXinelibOsd::Flush(void)
+   if (IsTrueColor()) {
+ 
+     LOCK_PIXMAPS;
+-    while (cPixmapMemory *pm = RenderPixmaps()) {
++    while (cPixmapMemory *pm = dynamic_cast<cPixmapMemory *>(RenderPixmaps())) {
+       int w = pm->ViewPort().Width();
+       int h = pm->ViewPort().Height();
+       int d = w * sizeof(tColor);

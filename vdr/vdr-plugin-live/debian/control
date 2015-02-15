@@ -3,7 +3,7 @@ Section: video
 Priority: extra
 Maintainer: #MAINTAINER#
 Build-Depends: debhelper (>= 7.0.50~), vdr-dev (>= #VDR_VERSION#),
- dpatch, libtntnet-dev, libcxxtools-dev, libssl-dev, pkg-config
+ dpatch, libtntnet-dev, libcxxtools-dev, libssl-dev, pkg-config, libpcre3-dev
 Standards-Version: 3.9.3
 Homepage: http://live.vdr-developer.org
 

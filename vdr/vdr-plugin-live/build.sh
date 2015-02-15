@@ -3,7 +3,7 @@ SRC_URL='git://projects.vdr-developer.org/vdr-plugin-live.git'
 . "$(dirname "$0")/../commons.sh"
 
 version() {
-	local delta='-4'
+	local delta='0'
     local version=$(git --git-dir="$SRC_DIR/.git" show $REV:setup.h | awk -F '[ "]' '/\#define LIVEVERSION / { print $4 }')
     _pkg_version "$version" "$delta"
 }

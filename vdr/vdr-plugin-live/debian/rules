@@ -1,22 +1,12 @@
 #!/usr/bin/make -f
 
-PKGCFG   = $(shell pkg-config --variable=$(1) vdr)
-CFLAGS   = $(call PKGCFG,cflags)
-CXXFLAGS = $(call PKGCFG,cxxflags)
-APIVERSION = $(call PKGCFG,apiversion)
-MAKE_OPTIONS = VDRDIR=/usr/include/vdr \
-               LIBDIR=. \
-               LOCALEDIR=locale \
-               CFLAGS="$(CFLAGS)" \
-               CXXFLAGS="$(CXXFLAGS)" \
-               APIVERSION=$(APIVERSION)
-
 %:
 	dh $@
 
 override_dh_auto_build:
-	dh_auto_build -- all $(MAKE_OPTIONS)
+	$(MAKE) -j4 -- all
 
-override_dh_auto_clean:
-	$(MAKE) -o .dependencies clean $(MAKE_OPTIONS)
-	rm -rf locale libvdr-*.so.*
+override_dh_auto_install:
+	dh_auto_install -- DESTDIR="$(CURDIR)/debian/tmp"
+
+override_dh_installdocs override_dh_installchangelogs:

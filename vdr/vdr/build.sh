@@ -4,7 +4,7 @@
 REV="$VDR_REV"
 
 version() {
-    local delta='64'
+    local delta='63'
     _pkg_version "$(_vdr_version)" "$delta" 0
 }
 

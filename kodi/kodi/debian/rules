@@ -72,7 +72,7 @@ override_dh_auto_install:
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp
 	$(MAKE) eventclients DESTDIR=$(CURDIR)/debian/tmp \
 		WII_EXTRA_OPTS=-DCWIID_OLD
-	
+
 	# Copy addons
 	[ -d "$(CURDIR)/debian/tmp/usr/share/kodi" ] || mkdir -p "$(CURDIR)/debian/tmp/usr/share/kodi"
 	cp -r "$(CURDIR)/debian/addons" "$(CURDIR)/debian/tmp/usr/share/kodi"

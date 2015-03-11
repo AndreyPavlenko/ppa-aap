@@ -56,3 +56,10 @@ _deb_dir() {
     
     echo "$deb_dir"
 }
+
+_deb_dir_preprocess() {
+    if [ "$2" == 'precise' ] || [ "$2" == 'trusty' ]
+    then
+        sed -i 's/Architecture: any/Architecture: amd64 i386/g' "$1/control"
+    fi
+}

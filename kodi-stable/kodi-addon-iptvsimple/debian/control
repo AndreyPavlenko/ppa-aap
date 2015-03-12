@@ -1,0 +1,16 @@
+Source: kodi-addon-iptvsimple
+Section: video
+Priority: extra
+Maintainer: #MAINTAINER#
+Build-Depends: debhelper (>= 9.0.0), autoconf, automake, libtool, zlib1g-dev
+Standards-Version: 3.9.3
+Homepage: http://xbmc.org
+
+Package: kodi-addon-iptvsimple
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, kodi
+Provides: kodi-pvr-iptvsimple
+Description: KODI PVR Iptv Addon
+ This package contains the IPTV PVR (Personal Video Recorder) Addon for Kodi, 
+ formerly known as XBMC Media Center, is an award winning free and open source 
+ software media-player and entertainment hub for all your digital media.

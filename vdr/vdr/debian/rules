@@ -2,7 +2,6 @@
 
 DIR := $(CURDIR)
 DESTDIR := $(DIR)/debian/tmp
-NPROC := $(shell getconf _NPROCESSORS_ONLN)
 DISTRIB_VERSION := $(shell lsb_release -sr)
 RM_PLUGINS := $(shell ls PLUGINS/src/ | grep -vE '(dvbhddevice|dvbsddevice)')
 MAKE_ARGS := PREFIX=/usr RESDIR=/usr/share/vdr VIDEODIR=/var/lib/video.00 \
@@ -10,11 +9,11 @@ MAKE_ARGS := PREFIX=/usr RESDIR=/usr/share/vdr VIDEODIR=/var/lib/video.00 \
              DESTDIR="$(DESTDIR)"
 
 %:
-	dh $@ 
+	dh $@ --parallel
 
 override_dh_auto_build:
 	for i in $(RM_PLUGINS); do /bin/rm -rf "$(DIR)/PLUGINS/src/$$i"; done
-	unset CFLAGS CPPFLAGS CXXFLAGS; $(MAKE) -j$(NPROC) $(MAKE_ARGS)
+	unset CFLAGS CPPFLAGS CXXFLAGS; $(MAKE) $(MAKE_ARGS)
 
 override_dh_auto_install:
 	unset CFLAGS CPPFLAGS CXXFLAGS; $(MAKE) install $(MAKE_ARGS)

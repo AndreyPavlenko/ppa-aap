@@ -2,13 +2,9 @@
 
 DIR := $(CURDIR)
 DESTDIR := $(DIR)/debian/tmp
-NPROC := $(shell getconf _NPROCESSORS_ONLN)
 
 %:
-	dh $@ 
-
-override_dh_auto_build:
-	dh_auto_build -- -j$(NPROC)
+	dh $@ --parallel
 
 override_dh_auto_install:
 	dh_auto_build -- install DESTDIR="$(DESTDIR)"

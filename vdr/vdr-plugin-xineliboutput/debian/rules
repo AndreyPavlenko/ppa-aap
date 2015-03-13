@@ -2,16 +2,15 @@
 
 DIR := $(CURDIR)
 DESTDIR := $(DIR)/debian/tmp
-NPROC := $(shell getconf _NPROCESSORS_ONLN)
 
 %:
-	dh $@
+	dh $@ --parallel
 
 override_dh_auto_configure:
 	./configure
 
 override_dh_auto_build:
-	dh_auto_build -- -j$(NPROC)
+	dh_auto_build
 	txt2man -s 1 -t vdr-sxfe -v "Remote X-Server frontend for vdr-plugin-xineliboutput" debian/vdr-sxfe.1.txt >vdr-sxfe.1
 	txt2man -s 1 -t vdr-fbfe -v "Remote Framebuffer frontend for vdr-plugin-xineliboutput" debian/vdr-fbfe.1.txt >vdr-fbfe.1
 

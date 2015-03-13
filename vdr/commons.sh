@@ -41,7 +41,8 @@ _pkg_version() {
     local sha="${4:-"$(_git_sha)"}"
     local bs_ci_count=$(_bs_ci_count)
     local vdr_ci_count=$(_vdr_ci_count)
-    echo "${version}-$(($ci_count + $vdr_ci_count + $bs_ci_count + $delta))~${sha}"
+    local common_delta="2"
+    echo "${version}-$(($ci_count + $vdr_ci_count + $bs_ci_count + $delta + $common_delta))~${sha}"
 }
 
 _deb_dir() {

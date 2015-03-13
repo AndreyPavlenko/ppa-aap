@@ -32,6 +32,7 @@ _update_ppa_builder() {
         git "--git-dir=$PPA_BUILDER/.git" --work-tree="$PPA_BUILDER" pull > /dev/null
     fi
 }
+
 update() {
     if [ "$DIR" = "$PPA_ROOT_DIR" ]
     then

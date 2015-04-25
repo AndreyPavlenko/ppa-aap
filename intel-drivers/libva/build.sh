@@ -1,7 +1,6 @@
 #!/bin/bash
 
 SRC_URL='git://anongit.freedesktop.org/vaapi/libva'
-UNSUPPORTED_PLATFORMS='precise(:\w+)?'
 . "$(dirname "$0")/../commons.sh"
 
 version() {

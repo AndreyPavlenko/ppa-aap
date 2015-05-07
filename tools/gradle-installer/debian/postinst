@@ -16,11 +16,12 @@ case "$1" in
         echo "Installing..."
         unzip "$ZIP_FILE" -d "$TMP_DIR" > /dev/null
         rm -rf "/usr/lib/gradle/$VERSION"
-        mkdir -p "/usr/lib/gradle"
+        mkdir -p /usr/lib/gradle
         mv "$TMP_DIR/gradle-$VERSION" "/usr/lib/gradle/$VERSION"
-        rm -rf "/usr/lib/gradle/default"
-        ln -s "/usr/lib/gradle/$VERSION" "/usr/lib/gradle/default"
         rm -rf "$TMP_DIR"
+        rm -rf /usr/lib/gradle/default
+        ln -s "/usr/lib/gradle/$VERSION" /usr/lib/gradle/default
+        chmod a+x /usr/lib/gradle/default/bin/gradle
         update-alternatives --install /usr/bin/gradle gradle /usr/lib/gradle/default/bin/gradle 100
     ;;
 

@@ -19,7 +19,8 @@ _gradle_url() {
 
 version() {
     local delta='0'
-    echo "$(_gradle_ver)"-"$delta"
+    local bs_ci_count=$(_bs_ci_count)
+    echo "$(_gradle_ver)"-"$(($bs_ci_count + $delta))"
 }
 
 _checkout() {
@@ -44,6 +45,7 @@ _deb_dir() {
         local url="$(_gradle_url)"
         cp -r "$DIR/debian" "$deb_dir"
         sed -i "s#@URL@#$url#; s#@VERSION@#$ver#" "$deb_dir/postinst"
+        sed -i "s#@VERSION@#$ver#" "$deb_dir/postrm"
     fi
 
     echo "$deb_dir"

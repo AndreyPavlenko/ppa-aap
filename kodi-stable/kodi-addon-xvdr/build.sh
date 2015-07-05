@@ -1,7 +1,6 @@
 #!/bin/bash
 
 : ${SRC_URL:='https://github.com/pipelka/xbmc-addon-xvdr.git'}
-: ${REV:='kodi-helix/kodi-helix'}
 . "$(dirname "$0")/../commons.sh"
 
 version() {

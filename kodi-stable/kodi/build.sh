@@ -2,8 +2,10 @@
 
 : ${PKG_EPOCH:='2'}
 : ${SRC_URL:='https://github.com/xbmc/xbmc.git'}
-: ${REV:='Helix'}
+PPA_DEPENDS="deb http://ppa.launchpad.net/aap/kodi/ubuntu #DISTRIB# main|\
+deb http://ppa.launchpad.net/team-xbmc/xbmc-ppa-build-depends/ubuntu #DISTRIB# main"
 . "$(dirname "$0")/../commons.sh"
+REV='origin/Isengard'
 
 version() {
     local delta='0'

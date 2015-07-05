@@ -5,7 +5,8 @@ Maintainer: #MAINTAINER#
 Build-Depends: debhelper (>= 7.0.50~),
  autoconf,
  automake,
- autopoint | gettext,
+ autopoint,
+ gettext,
  autotools-dev,
  cmake,
  ccache,
@@ -14,6 +15,7 @@ Build-Depends: debhelper (>= 7.0.50~),
  default-jre | openjdk-6-jre | openjdk-7-jre,
  fpc,
  gawk,
+ gcc (>= 4.8) | gcc-4.8,
  gdc,
  gperf,
  libafpclient-dev,
@@ -27,9 +29,8 @@ Build-Depends: debhelper (>= 7.0.50~),
  libboost-thread-dev,
  libbz2-dev,
  libcdio-dev,
+ libcec3 | libcec2 (>= 2.2.0),
  libcec-dev (>= 2.2.0),
- libcec2 (>= 2.2.0),
- libcrystalhd-dev,
  libcurl4-openssl-dev | libcurl4-gnutls-dev | libcurl-dev,
  libcwiid-dev,
  libdbus-1-dev,
@@ -58,21 +59,19 @@ Build-Depends: debhelper (>= 7.0.50~),
  libogg-dev,
  libomxil-bellagio-dev [armel],
  libpcre3-dev,
+ libplatform-dev,
  libplist-dev,
  libpng12-dev | libpng-dev,
- libpostproc-dev,
  libpulse-dev,
  librtmp-dev,
  libsamplerate-dev,
- libsdl-image1.2-dev,
- libsdl-mixer1.2-dev,
  libsdl2-dev,
  libshairplay-dev,
  libsmbclient-dev,
  libsqlite3-dev,
  libssh-dev,
  libssl-dev,
- libtag1x8 | libtag1-dev (>= 1.8),
+ libtag1-dev (>= 1.8) | libtag1x8,
  libtiff5-dev | libtiff-dev | libtiff4-dev,
  libtinyxml-dev,
  libtool,
@@ -107,26 +106,22 @@ Depends: kodi-bin (>= ${source:Version}),
          curl,
          mesa-utils,
          x11-utils,
-         ttf-liberation | fonts-liberation,
-         ttf-dejavu-core,
+         fonts-liberation | ttf-liberation,
+         fonts-dejavu-core | ttf-dejavu-core,
          python-bluez | python-lightblue,
          python-imaging,
          python-simplejson,
-         libafpclient0,
          libmad0,
          libass5 | libass4,
          libssh-4 | libssh2-1,
          libnfs4 | libnfs1,
          libbluray1,
-         libshairport2 | libshairport1,
          libshairplay0,
-         libmp3lame0,
          libvorbisfile3,
          libaacs0,
-         libflac8,
-         libcec2 (>= 2.2.0),
+         libcec3 | libcec2 (>= 2.2.0),
          librtmp1 | librtmp0,
-         libgnutls26 | libgnutls28,
+         libgnutls-deb0-28 | libgnutls28 | libgnutls26,
          libxslt1.1,
          ${python:Depends},
          ${misc:Depends}
@@ -464,6 +459,29 @@ Description: Kodi Media Center (Audio Add-on Dev package)
  multimedia jukebox.
  .
  This is the Development package for Kodi audio add-ons.
+
+Package: kodi-tools-texturepacker
+Architecture: any
+Description: Kodi Media Center (Skin Dev - TexturePacker)
+ Kodi, formerly known as XBMC Media Center, is an award winning free and
+ open source software media-player and entertainment hub for all your digital
+ media. Kodi is available for Linux, Mac OS X (Leopard, Tiger and Apple TV)
+ and Microsoft Windows, as well as the original Xbox game console. Created in
+ 2003 by a group of like minded programmers, Kodi is a non-profit project run
+ and developed by volunteers located around the world. More than 50 software
+ developers have contributed to Kodi, and 100-plus translators have worked to
+ expand its reach, making it available in more than 30 languages.
+ .
+ While Kodi functions very well as a standard media player application for
+ your computer, it has been designed to be the perfect companion for your
+ HTPC. Supporting an almost endless range of remote controls, and combined
+ with its beautiful interface and powerful skinning engine, Kodi feels very
+ natural to use from the couch and is the ideal solution for your home
+ theater. Once installed, your computer will become a fully functional
+ multimedia jukebox.
+ .
+ This is the Kodi TexturePacker tool.
+
 
 Package: xbmc
 Depends: kodi, ${misc:Depends}

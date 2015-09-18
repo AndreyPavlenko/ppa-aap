@@ -2,7 +2,6 @@
 
 DIR := $(CURDIR)
 DESTDIR := $(DIR)/debian/tmp
-ARCH := $(shell dpkg-architecture -qDEB_BUILD_ARCH)
 DISTRIB_VERSION := $(shell lsb_release -sr)
 RM_PLUGINS := $(shell ls PLUGINS/src/ | grep -vE '(dvbhddevice|dvbsddevice)')
 MAKE_ARGS := PREFIX=/usr RESDIR=/usr/share/vdr VIDEODIR=/var/lib/video.00 \
@@ -14,19 +13,10 @@ MAKE_ARGS := PREFIX=/usr RESDIR=/usr/share/vdr VIDEODIR=/var/lib/video.00 \
 
 override_dh_auto_build:
 	for i in $(RM_PLUGINS); do /bin/rm -rf "$(DIR)/PLUGINS/src/$$i"; done
-
-# Temporary workaround for armhf to avoid segfaults
-ifeq ($(ARCH),armhf)
-	find "$(DIR)" -name *.po -exec rm -v "{}" \;
-endif
-
 	unset CFLAGS CPPFLAGS CXXFLAGS; $(MAKE) $(MAKE_ARGS)
 
 override_dh_auto_install:
-	mkdir -p "$(DIR)/locale"
-	touch "$(DIR)/locale/tmp"
 	unset CFLAGS CPPFLAGS CXXFLAGS; $(MAKE) install $(MAKE_ARGS)
-	rm "$(DESTDIR)/usr/share/locale/tmp"
 
 # Includes
 	cp -pLR "$(DIR)/include" "$(DESTDIR)/usr"

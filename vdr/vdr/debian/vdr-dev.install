@@ -1,6 +1,2 @@
 usr/include
 usr/lib/pkgconfig
-
-PLUGINS/src/dvbsddevice/*.h                 usr/include/vdr/plugins/dvbsddevice/
-PLUGINS/src/dvbhddevice/*.h                 usr/include/vdr/plugins/dvbhddevice/
-PLUGINS/src/dvbhddevice/libhdffcmd/*.h      usr/include/vdr/plugins/dvbhddevice/libhdffcmd/

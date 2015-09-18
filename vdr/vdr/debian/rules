@@ -3,7 +3,7 @@
 DIR := $(CURDIR)
 DESTDIR := $(DIR)/debian/tmp
 DISTRIB_VERSION := $(shell lsb_release -sr)
-RM_PLUGINS := $(shell ls PLUGINS/src/ | grep -vE '(dvbhddevice|dvbsddevice)')
+RM_PLUGINS := $(shell ls PLUGINS/src/)
 MAKE_ARGS := PREFIX=/usr RESDIR=/usr/share/vdr VIDEODIR=/var/lib/video.00 \
              CONFDIR=/etc/vdr CACHEDIR=/var/cache/vdr LIBDIR=/usr/lib/vdr/plugins \
              DESTDIR="$(DESTDIR)"

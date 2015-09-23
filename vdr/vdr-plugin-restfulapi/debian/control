@@ -3,7 +3,7 @@ Section: video
 Priority: extra
 Maintainer: #MAINTAINER#
 Build-Depends: debhelper (>= 8), vdr-dev (>= #VDR_VERSION#), pkg-config,
- gettext, libcxxtools-dev
+ gettext, libcxxtools-dev, libmagick++-dev
 Standards-Version: 3.9.1
 Homepage: https://github.com/yavdr/vdr-plugin-restfulapi
 

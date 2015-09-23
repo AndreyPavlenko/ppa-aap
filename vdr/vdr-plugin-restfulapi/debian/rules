@@ -1,13 +1,17 @@
 #!/usr/bin/make -f
 
+DEST := debian/vdr-plugin-restfulapi
 .PHONY: override_dh_strip override_dh_auto_install override_dh_installdocs override_dh_installchangelogs
 
 override_dh_strip:
 	dh_strip --dbg-package=vdr-plugin-restfulapi-dbg
 
 override_dh_auto_install:
-	LIBDIR=. dh_auto_install --destdir=debian/vdr-plugin-restfulapi
-	rm -rf debian/vdr-plugin-restfulapi/etc/vdr/plugins/restfulapi
+	LIBDIR=. dh_auto_install --destdir=$(DEST)
+	rm -rf $(DEST)/etc/vdr/plugins/restfulapi
+	mkdir -p $(DEST)/var/lib/vdr/plugins/restfulapi/
+	cp restfulapi.conf $(DEST)/etc/vdr/plugins/plugin.restfulapi.conf
+	cp API.html web/osd.css web/osd.js $(DEST)/var/lib/vdr/plugins/restfulapi/
 
 override_dh_installdocs:
 

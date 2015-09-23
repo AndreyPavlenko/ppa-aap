@@ -1,0 +1,15 @@
+Source: vdr-plugin-epgfixer
+Section: video
+Priority: extra
+Maintainer: #MAINTAINER#
+Build-Depends: debhelper (>= 8), vdr-dev (>= #VDR_VERSION#), pkg-config,
+ gettext, libpcre3-dev
+Standards-Version: 3.9.1
+Homepage: http://projects.vdr-developer.org/projects/plg-epgfixer
+
+Package: vdr-plugin-epgfixer
+Architecture: any
+Depends: ${shlibs:Depends}, vdr (>= #VDR_VERSION#)
+Description: Plugin for modifying EPG data using regular expressions.
+ Plugin for modifying EPG data using regular expressions.
+

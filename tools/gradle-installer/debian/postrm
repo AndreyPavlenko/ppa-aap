@@ -1,7 +1,7 @@
 #!/bin/sh
 
 case "$1" in
-    purge|remove)
+    purge|remove|upgrade)
         update-alternatives --remove gradle /usr/lib/gradle/default/bin/gradle || true
         rm -rf '/usr/lib/gradle/@VERSION@' '/usr/lib/gradle/default'
         rmdir --ignore-fail-on-non-empty '/usr/lib/gradle' 2>/dev/null || true

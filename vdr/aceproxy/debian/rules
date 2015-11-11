@@ -16,12 +16,13 @@ override_dh_auto_install:
 	mv "$(DESTDIR)/usr/share/aceproxy/plugins/config/p2pproxy.py"     "$(DESTDIR)/etc/aceproxy/"
 	mv "$(DESTDIR)/usr/share/aceproxy/plugins/config/torrenttelik.py" "$(DESTDIR)/etc/aceproxy/"
 	mv "$(DESTDIR)/usr/share/aceproxy/plugins/config/torrenttv.py"    "$(DESTDIR)/etc/aceproxy/"
-	sed -i -r 's/acespawn *= *False/acespawn = True/'             "$(DESTDIR)/etc/aceproxy/aceconfig.py"
-#	sed -i -r 's/vlcspawn *= *False/vlcspawn = True/'             "$(DESTDIR)/etc/aceproxy/aceconfig.py"
+	sed -i -r 's/acespawn *= *False/acespawn = True/'         "$(DESTDIR)/etc/aceproxy/aceconfig.py"
+	sed -i -r 's/videopausedelay *= *0/videopausedelay = 30'  "$(DESTDIR)/etc/aceproxy/aceconfig.py"
+#	sed -i -r 's/vlcspawn *= *False/vlcspawn = True/'         "$(DESTDIR)/etc/aceproxy/aceconfig.py"
 #	sed -i -r 's/vlcuse *= *False/vlcuse = True/'             "$(DESTDIR)/etc/aceproxy/aceconfig.py"
 #	sed -i -r 's/videodelay *= *.+/videodelay = 0/'           "$(DESTDIR)/etc/aceproxy/aceconfig.py"
-	sed -i -r 's/videoobey *= *True/videoobey = False/'       "$(DESTDIR)/etc/aceproxy/aceconfig.py"
-	sed -i -r 's/videopausedelay *= *.+/videopausedelay = 0/' "$(DESTDIR)/etc/aceproxy/aceconfig.py"
+#	sed -i -r 's/videoobey *= *True/videoobey = False/'       "$(DESTDIR)/etc/aceproxy/aceconfig.py"
+#	sed -i -r 's/videopausedelay *= *.+/videopausedelay = 0/' "$(DESTDIR)/etc/aceproxy/aceconfig.py"
 	
 ifeq ($(shell dpkg --compare-versions '$(DISTRIB_VERSION)' lt '14.10'; echo $$?),0)
 	mkdir -p "$(DESTDIR)/etc/init"

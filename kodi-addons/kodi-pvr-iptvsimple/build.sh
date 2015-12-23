@@ -1,8 +1,6 @@
 #!/bin/bash
 
 : ${SRC_URL:='https://github.com/AndreyPavlenko/pvr.iptvsimple.git'}
-PPA_DEPENDS="deb http://ppa.launchpad.net/team-xbmc/unstable/ubuntu #DISTRIB# main|\
-deb http://ppa.launchpad.net/team-xbmc/xbmc-ppa-build-depends/ubuntu #DISTRIB# main"
 . "$(dirname "$0")/../commons.sh"
 
 version() {

@@ -2,6 +2,7 @@
 
 : ${SRC_URL:='https://github.com/AndreyPavlenko/pvr.iptvsimple.git'}
 . "$(dirname "$0")/../commons.sh"
+REV='origin/Jarvis'
 
 version() {
     local delta='0'

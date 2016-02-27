@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SRC_URL='https://github.com/pipelka/vdr-plugin-xvdr.git'
+SRC_URL='https://github.com/AndreyPavlenko/vdr-plugin-xvdr.git'
 . "$(dirname "$0")/../commons.sh"
 
 version() {

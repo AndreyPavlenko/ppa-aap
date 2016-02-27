@@ -2,6 +2,7 @@
 
 : ${SRC_URL:='https://github.com/AndreyPavlenko/xbmc-addon-xvdr.git'}
 . "$(dirname "$0")/../commons.sh"
+REV='origin/Jarvis'
 
 version() {
     local delta='0'

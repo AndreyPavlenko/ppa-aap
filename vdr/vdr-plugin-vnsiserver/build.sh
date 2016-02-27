@@ -1,6 +1,7 @@
 #!/bin/bash
 
 SRC_URL='https://github.com/FernetMenta/vdr-plugin-vnsiserver'
+PKG_EPOCH='1'
 . "$(dirname "$0")/../commons.sh"
 
 version() {

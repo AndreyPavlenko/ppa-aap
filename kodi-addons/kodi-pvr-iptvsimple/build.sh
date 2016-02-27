@@ -5,7 +5,7 @@
 REV='origin/Jarvis'
 
 version() {
-    local delta='0'
+    local delta='1'
     local version=$(git --git-dir="$SRC_DIR/.git" show $REV:src/client.h | awk '/#define PVR_CLIENT_VERSION/ {print $3}' | tr -d '"')
     echo "$(_pkg_version ${version} $delta)"
 }

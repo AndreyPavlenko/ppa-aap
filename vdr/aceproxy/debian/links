@@ -3,3 +3,4 @@ etc/aceproxy/aceconfig.py              usr/share/aceproxy/aceconfig.py
 etc/aceproxy/p2pproxy.py               usr/share/aceproxy/plugins/config/p2pproxy.py
 etc/aceproxy/torrenttelik.py           usr/share/aceproxy/plugins/config/torrenttelik.py
 etc/aceproxy/torrenttv.py              usr/share/aceproxy/plugins/config/torrenttv.py
+etc/aceproxy/playlist.py               usr/share/aceproxy/plugins/config/playlist.py

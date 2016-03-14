@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SRC_URL='https://github.com/ValdikSS/aceproxy.git'
+SRC_URL='https://github.com/AndreyPavlenko/aceproxy.git'
 . "$(dirname "$0")/../commons.sh"
 
 version() {

@@ -1,0 +1,101 @@
+#!/bin/sh
+set -e
+
+NAME='Kodi'
+EXECUTABLE='/usr/lib/kodi/kodi.bin'
+PID_FILE="$HOME/.kodi/kodi.pid"
+CTL='/sbin/initctl'
+
+if pidof systemd > /dev/null
+then
+    CTL='systemctl'
+else
+    CTL='initctl'
+fi
+
+status() {
+    if [ -f "$PID_FILE" ] && [ "$(ps -p $(cat "$PID_FILE") -o comm= 2>/dev/null)" = "$(basename "$EXECUTABLE")" ]
+    then
+        echo " * $NAME is running"
+        return 0
+    else
+        echo " * $NAME is not running"
+        return 1
+    fi
+}
+
+stop() {
+    if status > /dev/null
+    then
+        kill "$(cat "$PID_FILE")"
+        echo " * $NAME stopped"
+    else
+       status
+    fi
+}
+
+start_vdr() {
+    if [ "$CTL" = 'initctl' ]
+    then
+        $CTL status vdr | grep -q 'start/' && return 0
+    else
+        $CTL -q is-active vdr && return 0
+    fi
+    
+    if sudo $CTL start vdr
+    then
+        trap "stop > /dev/null 2>&1 || true; sudo $CTL stop vdr > /dev/null 2>&1" EXIT HUP INT QUIT TERM
+    else
+        echo 'Failed to start VDR' 2>&1
+        return 1
+    fi
+    
+    for i in $(seq 1 20)
+    do
+        if nc -zw1 localhost 34891
+        then
+            return 0
+        fi
+        
+        sleep 1
+    done
+    
+    echo 'The XVDR plugin seems not to be running' 2>&1
+    return 1
+}
+
+start() {
+    local pid_dir="$(dirname "$PID_FILE")"
+    [ -d "$pid_dir" ] || mkdir -p "$pid_dir"
+    start_vdr || true
+    $EXECUTABLE "$@" > "$pid_dir/$NAME.stdout" 2> "$pid_dir/$NAME.stderr" &
+    local pid="$!"
+    echo $pid > "$PID_FILE"
+    wait $pid
+}
+
+case "$1" in
+  start)
+    shift
+    
+    if status > /dev/null
+    then
+        status
+    else
+        start $@ &
+    fi
+    ;;
+  stop)
+    stop
+    ;;
+  restart)
+    shift
+    stop > /dev/null || true
+    "$0" start $@
+    ;;
+  status)
+    status
+  ;;
+  *)
+    "$0" start $@
+esac

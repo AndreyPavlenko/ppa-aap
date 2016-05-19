@@ -1,14 +1,12 @@
 [Unit]
 Description=ACE Proxy
-After=vdr.service
-StopWhenUnneeded=true
+After=network.target
 
 [Service]
-Type=simple
 User=aceproxy
 ExecStart=/usr/bin/aceproxy
 RestartSec=1
 Restart=on-failure
 
 [Install]
-WantedBy=vdr.service
+WantedBy=multi-user.target

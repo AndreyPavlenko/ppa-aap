@@ -2,16 +2,22 @@
 
 DIR := $(CURDIR)
 DESTDIR := $(DIR)/debian/tmp
+ARCH := $(shell dpkg-architecture -qDEB_BUILD_ARCH)
+MAKE_ARGS :=
+
+ifeq ($(ARCH),armhf)
+	MAKE_ARGS := LIBDVBCSA=1
+endif
 
 %:
-	dh $@ 
+	dh $@
 
 override_dh_auto_build:
-	$(MAKE)
+	$(MAKE) $(MAKE_ARGS)
 
 override_dh_auto_install:
-	$(MAKE) install DESTDIR="$(DESTDIR)"
+	$(MAKE) install $(MAKE_ARGS) DESTDIR="$(DESTDIR)"
 	mkdir -p "$(DESTDIR)/etc/vdr/plugins"
-	cp "$(DIR)/debian/plugin.dvbapi.conf" "$(DESTDIR)/etc/vdr/plugins" 
+	cp "$(DIR)/debian/plugin.dvbapi.conf" "$(DESTDIR)/etc/vdr/plugins"
 
 override_dh_installchangelogs:

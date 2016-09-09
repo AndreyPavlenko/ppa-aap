@@ -2,7 +2,8 @@ Source: vdr-plugin-dvbapi
 Section: video
 Priority: extra
 Maintainer: #MAINTAINER#
-Build-Depends: debhelper (>= 8.0.0), vdr-dev (>= #VDR_VERSION#), pkg-config
+Build-Depends: debhelper (>= 8.0.0), vdr-dev (>= #VDR_VERSION#), pkg-config,
+ libdvbcsa-dev
 Standards-Version: 3.9.3
 Homepage: https://github.com/manio/vdr-plugin-dvbapi
 Vcs-Git: https://github.com/manio/vdr-plugin-dvbapi.git

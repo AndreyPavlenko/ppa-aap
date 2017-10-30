@@ -4,15 +4,11 @@
 . "$PPA_DIR/../commons.sh"
 
 : ${VDR_SRC_DIR:="$SOURCES_DIR/vdr"}
-: ${VDR_SRC_URL:='git://projects.vdr-developer.org/vdr.git'}
+#: ${VDR_SRC_URL:='git://projects.vdr-developer.org/vdr.git'}
+: ${VDR_SRC_URL:='ftp://ftp.tvdr.de/vdr/Developer/'}
 : ${VDR_REV:='origin/master'}
 
-update_vdr() {
-    _git_update "$VDR_SRC_URL" "$VDR_SRC_DIR" ${VDR_REV#*/} ${VDR_REV%%/*}
-}
-
 update() {
-    update_vdr
     _git_update "$SRC_URL"
 }
 
@@ -27,11 +23,13 @@ _checkout() {
 }
 
 _vdr_version() {
-    git --git-dir="$VDR_SRC_DIR/.git" show $VDR_REV:config.h | grep 'define VDRVERSION' | awk '{print $3}' | tr -d '"'
+    # git --git-dir="$VDR_SRC_DIR/.git" show $VDR_REV:config.h | grep 'define VDRVERSION' | awk '{print $3}' | tr -d '"'
+    curl -s "$VDR_SRC_URL" | grep -oP '(?<=vdr-)[0-9\.]+(?=\.tar\.bz2)' | sort -Vur | head -1
 }
 
 _vdr_ci_count() {
-    _git_ci_count "$VDR_SRC_DIR/.git" "$VDR_REV"
+    # _git_ci_count "$VDR_SRC_DIR/.git" "$VDR_REV"
+    curl -s "$VDR_SRC_URL" | grep -oP '(?<=vdr-)[0-9\.]+(?=\.tar\.bz2)' | wc -l
 }
 
 _pkg_version() {

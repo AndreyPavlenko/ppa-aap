@@ -4,12 +4,24 @@
 REV="$VDR_REV"
 
 version() {
-    local delta='63'
+    local delta='0'
     _pkg_version "$(_vdr_version)" "$delta" 0
 }
 
 update() {
-    update_vdr
+    echo
+}
+
+_checkout() {
+    local dst="$1"
+    local ver="$(_vdr_version)"
+    local url="${VDR_SRC_URL}vdr-${ver}.tar.bz2"
+    mkdir -p "$dst"
+    curl -s "$url" | tar -C "$dst" -xj --strip 1
+}
+
+ _changelog() {
+    echo "  * See HISTORY"
 }
 
 _deb_dir() {

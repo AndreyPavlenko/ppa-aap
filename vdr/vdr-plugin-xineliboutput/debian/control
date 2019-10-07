@@ -16,7 +16,8 @@ Build-Depends: debhelper (>= 7.0.50~), gettext, txt2man,
  libxrender-dev,
  libvdpau-dev,
  freeglut3-dev,
- pkg-config
+ pkg-config,
+ libcec-dev
 Standards-Version: 3.9.3
 Vcs-Git: git://projects.vdr-developer.org/xineliboutput.git
 Vcs-Browser: http://projects.vdr-developer.org/git/xineliboutput.git

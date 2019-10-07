@@ -3,7 +3,7 @@ Section: video
 Priority: extra
 Maintainer: #MAINTAINER#
 Build-Depends: debhelper (>= 8.0.0), libpcsclite-dev, libusb-1.0-0-dev,
- lsb-release
+ lsb-release, libssl-dev
 Standards-Version: 3.9.3
 Homepage: http://www.streamboard.tv/svn/oscam/
 Vcs-Git: http://www.streamboard.tv/svn/oscam/trunk

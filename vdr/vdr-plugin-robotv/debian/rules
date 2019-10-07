@@ -1,0 +1,15 @@
+#!/usr/bin/make -f
+
+DIR := $(CURDIR)
+DESTDIR := $(DIR)/debian/tmp
+
+%:
+	dh $@ 
+
+override_dh_auto_build:
+	$(MAKE) -j4 DESTDIR="$(DESTDIR)"
+
+override_dh_auto_install:
+	$(MAKE) install DESTDIR="$(DESTDIR)"
+	[ -d "$(DESTDIR)/etc/vdr/plugins/robotv" ] || mkdir -p "$(DESTDIR)/etc/vdr/plugins/robotv"
+	cp "$(DIR)/config/robotv.conf" "$(DESTDIR)/etc/vdr/plugins/robotv"

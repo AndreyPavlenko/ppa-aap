@@ -1,0 +1,13 @@
+Source: vdr-plugin-robotv
+Section: video
+Priority: extra
+Maintainer: #MAINTAINER#
+Build-Depends: debhelper (>= 8.0.0), vdr-dev (>= #VDR_VERSION#), pkg-config, zlib1g-dev
+Standards-Version: 3.9.3
+Homepage: https://github.com/pipelka/vdr-plugin-robotv
+
+Package: vdr-plugin-robotv
+Architecture: any
+Depends: ${shlibs:Depends}, vdr (>= #VDR_VERSION#)
+Description: roboTV VDR server plugin
+ roboTV is a Android TV based frontend for VDR. This is the VDR server part.

@@ -5,7 +5,7 @@
 
 : ${VDR_SRC_DIR:="$SOURCES_DIR/vdr"}
 #: ${VDR_SRC_URL:='git://projects.vdr-developer.org/vdr.git'}
-: ${VDR_SRC_URL:='ftp://ftp.tvdr.de/vdr/Developer/'}
+: ${VDR_SRC_URL:='ftp://ftp.tvdr.de/vdr/'}
 : ${VDR_REV:='origin/master'}
 
 update() {

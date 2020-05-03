@@ -2,7 +2,7 @@
 set -e
 
 DEPENDS=''
-SERVICE_URL='http://services.gradle.org/versions/current'
+SERVICE_URL='https://services.gradle.org/versions/current'
 DEPENDS='curl wget jshon'
 
 . "$(dirname "$0")/../commons.sh"

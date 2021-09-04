@@ -1,0 +1,41 @@
+Index: vdr-plugin-wirbelscan-2020.11.08/dvb_wrapper.c
+===================================================================
+--- vdr-plugin-wirbelscan-2020.11.08.orig/dvb_wrapper.c	2020-11-12 12:20:14.756379717 +0100
++++ vdr-plugin-wirbelscan-2020.11.08/dvb_wrapper.c	2020-11-12 12:20:14.744379876 +0100
+@@ -19,7 +19,11 @@
+ }
+ 
+ unsigned int GetFrontendStatus(cDevice * dev) {
++#ifdef __DYNAMIC_DEVICE_PROBE
++  cDvbDevice* dvbdevice = dev->HasSubDevice() ? (cDvbDevice*) dev->SubDevice() : (cDvbDevice*) dev;
++#else
+   cDvbDevice* dvbdevice = (cDvbDevice*) dev;
++#endif
+   fe_status_t value;
+   char devstr[256];
+   snprintf(devstr, 256, "/dev/dvb/adapter%d/frontend%d",
+@@ -42,7 +46,11 @@
+ 
+ 
+ unsigned int GetCapabilities(cDevice * dev) {
++#ifdef __DYNAMIC_DEVICE_PROBE
++  cDvbDevice* dvbdevice = dev->HasSubDevice() ? (cDvbDevice*) dev->SubDevice() : (cDvbDevice*) dev;
++#else
+   cDvbDevice* dvbdevice = (cDvbDevice*) dev;
++#endif
+   struct dvb_frontend_info fe_info;
+   char devstr[256];
+   snprintf(devstr, 256, "/dev/dvb/adapter%d/frontend%d",
+Index: vdr-plugin-wirbelscan-2020.11.08/scanner.c
+===================================================================
+--- vdr-plugin-wirbelscan-2020.11.08.orig/scanner.c	2020-11-12 12:20:14.756379717 +0100
++++ vdr-plugin-wirbelscan-2020.11.08/scanner.c	2020-11-12 12:20:14.744379876 +0100
+@@ -880,7 +880,7 @@
+              lock = false;
+ 
+           if (lock) {
+-             lStrength = ((cDvbDevice*) dev)->SignalStrength();
++             lStrength = dev->SignalStrength();
+              if (lStrength < 0 or lStrength > 100)
+                 lStrength = 0;
+              if (MenuScanning)

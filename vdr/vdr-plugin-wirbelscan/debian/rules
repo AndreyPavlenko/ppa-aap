@@ -1,0 +1,19 @@
+#!/usr/bin/make -f
+
+DIR := $(CURDIR)
+DESTDIR := $(DIR)/debian/tmp
+MAKE_OPTIONS = VDRDIR=/usr/include/vdr LIBDIR=. LOCALEDIR=locale
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	touch po/*.po
+	$(MAKE) -j1 all $(MAKE_OPTIONS)
+
+override_dh_auto_install:
+	$(MAKE) -j1 install DESTDIR="$(DESTDIR)" PREFIX="$(DESTDIR)"
+
+override_dh_auto_clean:
+	$(MAKE) -o .dependencies clean $(MAKE_OPTIONS)
+	 -rf locale libvdr-*.so.*

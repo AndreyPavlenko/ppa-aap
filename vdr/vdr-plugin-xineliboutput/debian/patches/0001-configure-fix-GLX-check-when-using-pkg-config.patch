@@ -1,0 +1,42 @@
+From 21df3eed9745333c19f175b707df7da0963391c5 Mon Sep 17 00:00:00 2001
+From: Petri Hintukainen <phintuka@gmail.com>
+Date: Thu, 2 Jul 2020 21:48:36 +0300
+Subject: configure: fix GLX check (when using pkg-config)
+
+---
+ configure | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/configure b/configure
+index b1138bb..1a443fd 100755
+--- a/configure
++++ b/configure
+@@ -238,6 +238,7 @@ FEATURES="
+   xrender
+   xshape
+   opengl
++  glx
+   pthread
+   dlfcn
+   vdpau
+@@ -345,6 +346,7 @@ check_deps(){
+   disabled vdr     && disable libextractor libcap libbluray avahi-client
+   disabled dlfcn   && disable opengl
+   disabled pthread && disable opengl
++  disabled glx     && disable opengl
+   disabled xrender && disable xshape xshm
+ }
+ 
+@@ -401,7 +403,8 @@ if enabled libxine; then
+     test_library X11  xshape       "X11/extensions/shape.h"    "-lXext"      "XShapeQueryExtension(0,0,0)"
+     test_library X11  xdpms        "X11/extensions/dpms.h"     "-lXext"      "DPMSDisable(0)"
+     test_library X11  xinerama     "X11/extensions/Xinerama.h" "-lXinerama"  "XineramaQueryScreens(0,0)"
+-    test_library X11  opengl       "GL/glx.h"                  "-lGL -lGLU"  "glXQueryVersion(0,0,0)"
++    test_library X11  opengl       "GL/gl.h"                   "-lGL -lGLU"  "glTexCoord2f(0.0,0.0)"
++    test_library X11  glx          "GL/glx.h"                  "-lGLX"       "glXQueryVersion(0,0,0)"
+     test_library none vdpau        "vdpau/vdpau_x11.h"         "-lvdpau"     "vdp_device_create_x11(0,0,0,0)"
+     test_library X11  dbus-glib-1  \
+       "dbus/dbus-glib.h" \
+-- 
+2.20.1
+

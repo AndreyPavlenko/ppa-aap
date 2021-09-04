@@ -5,7 +5,7 @@ SRC_URL='http://repo.or.cz/oscam.git'
 
 version() {
     local delta='2'
-    local version=$(git --git-dir="$SRC_DIR/.git" show $REV:globals.h | awk '/#define\s+CS_VERSION/ {print $3}' | tr -d '["_\-a-z]')
+    local version=$(git --git-dir="$SRC_DIR/.git" show $REV:globals.h | awk '/#define CS_VERSION/ {print $3}' | tr -d '["_\-a-z]')
     _pkg_version "$version" "$delta"
 }
 

@@ -1,0 +1,17 @@
+--- a/Makefile
++++ b/Makefile
+@@ -321,10 +321,10 @@
+ 	@echo GT $@
+ 	$(Q)xgettext -C -cTRANSLATORS --no-wrap --no-location -k -ktr -ktrNOOP --package-name=vdr-$(PLUGIN) --package-version=$(VERSION) --msgid-bugs-address='<phintuka@users.sourceforge.net>' -o $@ `ls $^`
+ 
+-%.po: $(I18Npot)
+-	@echo PO $@
+-	$(Q)msgmerge -U --no-wrap --no-location --backup=none -q -N $@ $<
+-	@touch $@
++#%.po: $(I18Npot)
++#	@echo PO $@
++#	$(Q)msgmerge -U --no-wrap --no-location --backup=none -q -N $@ $<
++#	@touch $@
+ 
+ $(I18Nmsgs): $(DESTDIR)$(LOCDIR)/%/LC_MESSAGES/vdr-$(PLUGIN).mo: $(PODIR)/%.mo
+ 	@echo Installing $^

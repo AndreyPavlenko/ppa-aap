@@ -1,0 +1,2 @@
+disable-po-update.patch
+0001-configure-fix-GLX-check-when-using-pkg-config.patch
